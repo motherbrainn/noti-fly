@@ -1,4 +1,6 @@
 import Head from "next/head";
+import PhoneNumberInput from "../components/PhoneNumberInput";
+import QrCode from "../components/QrCode";
 import styles from "../styles/Home.module.css";
 
 const env = process.env.NODE_ENV;
@@ -31,7 +33,12 @@ const Home: any = () => {
         <meta name="description" content="Notify App" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <div>
+        <h1>notify</h1>
+        <PhoneNumberInput />
+      </div>
       <button onClick={() => sendTextMessage()}>hi</button>
+      <QrCode />
     </div>
   );
 };
