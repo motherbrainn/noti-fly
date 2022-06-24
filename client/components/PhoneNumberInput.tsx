@@ -1,10 +1,12 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { postPhoneNumber } from "../service/httpRequests";
 
 const PhoneNumberInput = () => {
   const [phoneNumberInput, setPhoneNumberInput] = useState("");
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+    postPhoneNumber();
     console.log(phoneNumberInput);
     setPhoneNumberInput("");
   };

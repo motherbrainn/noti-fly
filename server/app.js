@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
+var { graphqlHTTP } = require("express-graphql");
+var { buildSchema } = require("graphql");
 dotenv.config();
 const PORT = process.env.PORT || 4000;
 const env = process.env.NODE_ENV;
@@ -11,6 +13,37 @@ const MessagingResponse = require("twilio").twiml.MessagingResponse;
 const app = express();
 
 let fakeDb = [];
+
+//set cors here to allow requests from client
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://zzzz.herokuapp.com/"],
+    credentials: true,
+  })
+);
+
+// Construct a schema, using GraphQL schema language
+var schema = buildSchema(`
+  type Query {
+    hello: String
+  }
+`);
+
+// The root provides a resolver function for each API endpoint
+var root = {
+  hello: () => {
+    return "Hello world!";
+  },
+};
+
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true,
+  })
+);
 
 //set cors here to allow requests from client
 app.use(
