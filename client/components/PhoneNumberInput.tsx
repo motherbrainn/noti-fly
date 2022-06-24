@@ -1,13 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { postPhoneNumber } from "../service/httpRequests";
+import { sendConfirmationTextMessage as sendTextConfirmation } from "../service/httpRequests";
 
 const PhoneNumberInput = () => {
   const [phoneNumberInput, setPhoneNumberInput] = useState("");
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    postPhoneNumber();
-    console.log(phoneNumberInput);
+    const phoneNumberWithCountryCode = `+1${phoneNumberInput}`;
+    sendTextConfirmation(phoneNumberWithCountryCode);
     setPhoneNumberInput("");
   };
 

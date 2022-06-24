@@ -4,21 +4,15 @@ const { sendConfirmationMessage } = require("./queries");
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
   type Query {
-    hello: String
-    sendConfirmation: String
+    sendConfirmation(phoneNumber: String): String
   }
 `);
 
 // The root provides a resolver function for each API endpoint
 const root = {
-  hello: () => {
-    console.log("hi");
-    return "Hello world!";
-  },
-  sendConfirmation: () => {
-    console.log("hi");
-    sendConfirmationMessage();
-    return "z";
+  sendConfirmation: ({ phoneNumber }) => {
+    const response = sendConfirmationMessage(phoneNumber);
+    return response;
   },
 };
 
