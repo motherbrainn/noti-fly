@@ -7,7 +7,7 @@ export const postPhoneNumber = () => {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-    body: JSON.stringify({ query: "{ hello }" }),
+    body: JSON.stringify({ query: "{ sendConfirmation }" }),
   })
     .then((r) => r.json())
     .then((data) => console.log("data returned:", data));
