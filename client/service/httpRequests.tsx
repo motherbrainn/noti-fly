@@ -1,7 +1,7 @@
 import { serverAddress } from "../pages";
 
-const sendConfirmationQuery = `
-query SendConfirmation($phoneNumber: String) {
+const sendConfirmationMutation = `
+mutation SendConfirmation($phoneNumber: String) {
     sendConfirmation(phoneNumber: $phoneNumber)
 }
 `;
@@ -14,7 +14,7 @@ export const sendConfirmationTextMessage = (phoneNumber: string) => {
       Accept: "application/json",
     },
     body: JSON.stringify({
-      query: sendConfirmationQuery,
+      query: sendConfirmationMutation,
       variables: { phoneNumber },
     }),
   });

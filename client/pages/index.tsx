@@ -21,6 +21,11 @@ const Home: any = () => {
       <div>
         <h1>notify</h1>
         <PhoneNumberInput />
+        <div>QR code name</div>
+        <div>
+          QR code prompt ie: Are you sure you want to notify the admin this
+          machine is broken?
+        </div>
       </div>
       <QrCode />
     </div>
