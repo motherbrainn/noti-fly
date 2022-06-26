@@ -1,6 +1,30 @@
 const twilio = require("twilio");
 const dotenv = require("dotenv");
 dotenv.config();
+const { Pool } = require("pg");
+
+const env = process.env.NODE_ENV;
+
+const pool =
+  env === "production"
+    ? new Pool({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      })
+    : new Pool({
+        user: process.env.DB_USER,
+        host: "localhost",
+        database: process.env.DB_NAME,
+        password: process.env.DB_USER_PASSWORD,
+        port: process.env.DB_PORT,
+      });
+
+const getRecords = async () => {
+  const res = await pool.query("SELECT * FROM user_data ORDER BY id DESC");
+  return res.rows;
+};
 
 const sendConfirmationMessage = (phoneNumber) => {
   //query db for all rows with this phone number
@@ -39,4 +63,5 @@ active: false
 
 module.exports = {
   sendConfirmationMessage,
+  getRecords,
 };

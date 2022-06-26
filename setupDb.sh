@@ -22,8 +22,7 @@ CREATE TABLE user_data (
 ID SERIAL PRIMARY KEY,
 KEY VARCHAR,
 phone_number VARCHAR,
-rumor_content VARCHAR,
-prompt VARCHAR,
+prompt_content VARCHAR,
 active BOOL,
 created_at TIMESTAMPTZ DEFAULT Now()
 );

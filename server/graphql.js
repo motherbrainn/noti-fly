@@ -1,24 +1,36 @@
 const { buildSchema } = require("graphql");
-const { sendConfirmationMessage } = require("./queries");
+const { sendConfirmationMessage, getRecords } = require("./queries");
 
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
+scalar Date
+
 type Query {
-    hello(date: String): [String],
+    getRecords: [User_Data]
   }
 
   type Mutation {
     sendConfirmation(phoneNumber: String): String
   }
+
+  type User_Data {
+    id: Int,
+    key: String,
+    phone_number: String,
+    prompt_content: String,
+    active: Boolean,
+    created_at: Date,
+  }
 `);
 
 // The root provides a resolver function for each API endpoint
 const root = {
-  hello: () => {
-    console.log("hello");
-  },
   sendConfirmation: ({ phoneNumber }) => {
     const response = sendConfirmationMessage(phoneNumber);
+    return response;
+  },
+  getRecords: () => {
+    const response = getRecords();
     return response;
   },
 };
