@@ -3,11 +3,11 @@ const { sendConfirmationMessage, getRecords } = require("./queries");
 
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
-scalar Date
+  scalar Date
 
-type Query {
-    getRecords: [User_Data]
-  }
+  type Query {
+      getRecords(id: String, key: String, phone_number: String, active: Boolean): [User_Data],
+    }
 
   type Mutation {
     sendConfirmation(phoneNumber: String): String
@@ -29,8 +29,9 @@ const root = {
     const response = sendConfirmationMessage(phoneNumber);
     return response;
   },
-  getRecords: () => {
-    const response = getRecords();
+  //can pass only one of: id, key, phone_number, active (or pass nothing to get all)
+  getRecords: ({ id, key, phone_number, active }) => {
+    const response = getRecords(id, key, phone_number, active);
     return response;
   },
 };

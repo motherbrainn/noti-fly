@@ -2,6 +2,7 @@ const twilio = require("twilio");
 const dotenv = require("dotenv");
 dotenv.config();
 const { Pool } = require("pg");
+const format = require("pg-format");
 
 const env = process.env.NODE_ENV;
 
@@ -21,8 +22,23 @@ const pool =
         port: process.env.DB_PORT,
       });
 
-const getRecords = async () => {
-  const res = await pool.query("SELECT * FROM user_data ORDER BY id DESC");
+const getRecords = async (id, key, phone_number, active) => {
+  let res;
+
+  const args = [{ id }, { key }, { phone_number }, { active }];
+  const queryParam = args.filter((arg) => Object.values(arg)[0] !== undefined);
+
+  //need to use pg-format here to parameterize identifier
+  if (queryParam.length > 0) {
+    const formattedQuery = format(
+      "SELECT * FROM user_data WHERE %I='%s' ORDER BY id DESC",
+      Object.keys(queryParam[0])[0],
+      Object.values(queryParam[0])[0]
+    );
+    res = await pool.query(formattedQuery);
+  } else {
+    res = await pool.query("SELECT * FROM user_data ORDER BY id DESC");
+  }
   return res.rows;
 };
 
