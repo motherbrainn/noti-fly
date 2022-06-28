@@ -42,6 +42,36 @@ const getRecords = async (id, key, phone_number, active) => {
   return res.rows;
 };
 
+//return number of removed records
+const deleteInactiveRecords = async (phone_number) => {
+  let res;
+  res = await pool.query(
+    "DELETE FROM user_data WHERE phone_number=$1 AND active=$2",
+    [phone_number, false]
+  );
+  return res.rowCount;
+};
+
+//new record will always be created with active: false
+const createNewRecord = async (key, phone_number, prompt_content) => {
+  let res;
+  res = await pool.query(
+    "INSERT INTO user_data (key, phone_number, prompt_content, active) VALUES ($1, $2, $3, $4) RETURNING *",
+    [key, phone_number, prompt_content, false]
+  );
+  return res.rows[0];
+};
+
+//activate inactivated instance for phone number. functionally, there should only ever be 1 inactivated instance for a phone number
+const activateRecordForPhoneNumber = async (phone_number) => {
+  let res;
+  res = await pool.query(
+    "UPDATE user_data SET active = $1 WHERE phone_number = $2",
+    [true, phone_number]
+  );
+  return res.rowCount;
+};
+
 const sendConfirmationMessage = (phoneNumber) => {
   //query db for all rows with this phone number
   //delete any entry for phone number where active is 'false' (there can only be one unconfirmed QR code per phone number at any time)
@@ -80,4 +110,7 @@ active: false
 module.exports = {
   sendConfirmationMessage,
   getRecords,
+  createNewRecord,
+  deleteInactiveRecords,
+  activateRecordForPhoneNumber,
 };

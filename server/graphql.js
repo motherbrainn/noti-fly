@@ -1,5 +1,11 @@
 const { buildSchema } = require("graphql");
-const { sendConfirmationMessage, getRecords } = require("./queries");
+const {
+  sendConfirmationMessage,
+  getRecords,
+  createNewRecord,
+  deleteInactiveRecords,
+  activateRecordForPhoneNumber,
+} = require("./queries");
 
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
@@ -11,6 +17,9 @@ const schema = buildSchema(`
 
   type Mutation {
     sendConfirmation(phoneNumber: String): String
+    createNewRecord(key: String, phone_number: String, prompt_content: String): User_Data
+    deleteInactiveRecords(phone_number: String): String
+    activateRecordForPhoneNumber(phone_number: String): String
   }
 
   type User_Data {
@@ -32,6 +41,18 @@ const root = {
   //can pass only one of: id, key, phone_number, active (or pass nothing to get all)
   getRecords: ({ id, key, phone_number, active }) => {
     const response = getRecords(id, key, phone_number, active);
+    return response;
+  },
+  createNewRecord: ({ key, phone_number, prompt_content }) => {
+    const response = createNewRecord(key, phone_number, prompt_content);
+    return response;
+  },
+  deleteInactiveRecords: ({ phone_number }) => {
+    const response = deleteInactiveRecords(phone_number);
+    return response;
+  },
+  activateRecordForPhoneNumber: ({ phone_number }) => {
+    const response = activateRecordForPhoneNumber(phone_number);
     return response;
   },
 };
