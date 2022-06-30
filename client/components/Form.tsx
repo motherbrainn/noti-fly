@@ -1,5 +1,8 @@
 import { ChangeEvent, useState } from "react";
-import { createNewQrCodeRecord } from "../service/httpRequests";
+import {
+  createNewQrCodeRecord,
+  removeInactiveRecordsForPhoneNumber,
+} from "../service/httpRequests";
 import { sendConfirmationTextMessage as sendTextConfirmation } from "../service/httpRequests";
 import Input from "./Input";
 
@@ -13,16 +16,19 @@ const Form = () => {
     const qrCodeName = notificationIdInput;
     const qrCodePrompt = qrCodePromptInput;
 
+    //remove inactivated records for phone number before creating a new one
     //create new QR code record in db, then send text confirmation
-    createNewQrCodeRecord(
-      phoneNumberWithCountryCode,
-      qrCodeName,
-      qrCodePrompt
-    ).then((res) => {
-      if (res === 200) {
-        sendTextConfirmation(phoneNumberWithCountryCode);
-      }
-    });
+    removeInactiveRecordsForPhoneNumber(phoneNumberWithCountryCode).then(() =>
+      createNewQrCodeRecord(
+        phoneNumberWithCountryCode,
+        qrCodeName,
+        qrCodePrompt
+      ).then((res) => {
+        if (res === 200) {
+          sendTextConfirmation(phoneNumberWithCountryCode);
+        }
+      })
+    );
 
     //clear prompts
     setPhoneNumberInput("");

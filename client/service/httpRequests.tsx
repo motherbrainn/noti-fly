@@ -13,6 +13,10 @@ const newQrCodeMutation = `mutation CreateNewRecord($phoneNumber: String, $notif
 }
 `;
 
+const removeInactiveRecordsForPhoneNumberMutation = `mutation deleteInactiveRecords($phoneNumber: String){
+  deleteInactiveRecords(phone_number: $phoneNumber)
+}`;
+
 export const sendConfirmationTextMessage = (phoneNumber: string) => {
   fetch(`${serverAddress}/graphql`, {
     method: "POST",
@@ -41,6 +45,25 @@ export const createNewQrCodeRecord = async (
     body: JSON.stringify({
       query: newQrCodeMutation,
       variables: { phoneNumber, notificationId, promptContent },
+    }),
+  }).then((response) => {
+    return response.status;
+  });
+  return res;
+};
+
+export const removeInactiveRecordsForPhoneNumber = async (
+  phoneNumber: string
+) => {
+  const res = fetch(`${serverAddress}/graphql`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      query: removeInactiveRecordsForPhoneNumberMutation,
+      variables: { phoneNumber },
     }),
   }).then((response) => {
     return response.status;
