@@ -1,5 +1,5 @@
 import Head from "next/head";
-import PhoneNumberInput from "../components/PhoneNumberInput";
+import Form from "../components/Form";
 import QrCode from "../components/QrCode";
 import styles from "../styles/Home.module.css";
 
@@ -16,11 +16,10 @@ const Home: any = () => {
       <Head>
         <title>Notify</title>
         <meta name="description" content="Notify App" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
         <h1>notify</h1>
-        <PhoneNumberInput />
+        <Form />
         <div>QR code name</div>
         <div>
           QR code prompt ie: Are you sure you want to notify the admin this

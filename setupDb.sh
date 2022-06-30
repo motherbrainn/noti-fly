@@ -21,6 +21,7 @@ psql -d $DB_NAME -U $DB_USER <<EOF
 CREATE TABLE user_data (
 ID SERIAL PRIMARY KEY,
 KEY VARCHAR,
+notification_id VARCHAR,
 phone_number VARCHAR,
 prompt_content VARCHAR,
 active BOOL,

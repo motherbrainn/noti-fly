@@ -53,11 +53,16 @@ const deleteInactiveRecords = async (phone_number) => {
 };
 
 //new record will always be created with active: false
-const createNewRecord = async (key, phone_number, prompt_content) => {
+const createNewRecord = async (
+  key,
+  notification_id,
+  phone_number,
+  prompt_content
+) => {
   let res;
   res = await pool.query(
-    "INSERT INTO user_data (key, phone_number, prompt_content, active) VALUES ($1, $2, $3, $4) RETURNING *",
-    [key, phone_number, prompt_content, false]
+    "INSERT INTO user_data (key, notification_id, phone_number, prompt_content, active) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+    [key, notification_id, phone_number, prompt_content, false]
   );
   return res.rows[0];
 };

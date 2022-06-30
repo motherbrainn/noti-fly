@@ -6,6 +6,13 @@ mutation SendConfirmation($phoneNumber: String) {
 }
 `;
 
+const newQrCodeMutation = `mutation CreateNewRecord($phoneNumber: String, $notificationId: String, $promptContent: String) {
+  createNewRecord(phone_number: $phoneNumber, notification_id: $notificationId, prompt_content: $promptContent) {
+    id
+  }
+}
+`;
+
 export const sendConfirmationTextMessage = (phoneNumber: string) => {
   fetch(`${serverAddress}/graphql`, {
     method: "POST",
@@ -18,4 +25,25 @@ export const sendConfirmationTextMessage = (phoneNumber: string) => {
       variables: { phoneNumber },
     }),
   });
+};
+
+export const createNewQrCodeRecord = async (
+  phoneNumber: string,
+  notificationId: string,
+  promptContent: string
+) => {
+  const res = fetch(`${serverAddress}/graphql`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      query: newQrCodeMutation,
+      variables: { phoneNumber, notificationId, promptContent },
+    }),
+  }).then((response) => {
+    return response.status;
+  });
+  return res;
 };

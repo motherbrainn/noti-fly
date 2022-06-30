@@ -7,6 +7,8 @@ const {
   activateRecordForPhoneNumber,
 } = require("./queries");
 
+const crypto = require("crypto");
+
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
   scalar Date
@@ -16,15 +18,16 @@ const schema = buildSchema(`
     }
 
   type Mutation {
-    sendConfirmation(phoneNumber: String): String
-    createNewRecord(key: String, phone_number: String, prompt_content: String): User_Data
-    deleteInactiveRecords(phone_number: String): String
-    activateRecordForPhoneNumber(phone_number: String): String
+    sendConfirmation(phoneNumber: String): String,
+    createNewRecord(key: String, notification_id: String, phone_number: String, prompt_content: String): User_Data,
+    deleteInactiveRecords(phone_number: String): String,
+    activateRecordForPhoneNumber(phone_number: String): String,
   }
 
   type User_Data {
     id: Int,
     key: String,
+    notification_id: String,
     phone_number: String,
     prompt_content: String,
     active: Boolean,
@@ -43,8 +46,14 @@ const root = {
     const response = getRecords(id, key, phone_number, active);
     return response;
   },
-  createNewRecord: ({ key, phone_number, prompt_content }) => {
-    const response = createNewRecord(key, phone_number, prompt_content);
+  createNewRecord: ({ phone_number, notification_id, prompt_content }) => {
+    const key = crypto.randomBytes(20).toString("hex");
+    const response = createNewRecord(
+      key,
+      notification_id,
+      phone_number,
+      prompt_content
+    );
     return response;
   },
   deleteInactiveRecords: ({ phone_number }) => {
