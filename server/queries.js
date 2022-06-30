@@ -85,7 +85,7 @@ const sendConfirmationMessage = (phoneNumber) => {
   const response = client.messages
     .create({
       body: "Reply with 'y' to opt in to text notifications for this QR code. Your QR code will not work until you opt in. Reply with 'stop' to unsubscribe",
-      to: process.env.TEST_PHONE_NUMBER, // Text this number
+      to: phoneNumber, // Text this number
       from: process.env.TWILIO_PHONE_NUMBER, // From a valid Twilio number
     })
     .then((message) => {

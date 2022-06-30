@@ -12,7 +12,6 @@ const QrCodeLandingPage = (query) => {
 };
 
 QrCodeLandingPage.getInitialProps = async ({ query }) => {
-  console.log(query);
   const { id } = query;
 
   return query;

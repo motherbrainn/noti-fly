@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import {
   createNewQrCodeRecord,
   removeInactiveRecordsForPhoneNumber,
@@ -6,7 +6,11 @@ import {
 import { sendConfirmationTextMessage as sendTextConfirmation } from "../service/httpRequests";
 import Input from "./Input";
 
-const Form = () => {
+interface FormPropsType {
+  setKey: Dispatch<SetStateAction<undefined>>;
+}
+
+const Form = ({ setKey }: FormPropsType) => {
   const [phoneNumberInput, setPhoneNumberInput] = useState("");
   const [notificationIdInput, setNotificationIdInput] = useState("");
   const [qrCodePromptInput, setQrCodePromptInput] = useState("");
@@ -24,7 +28,8 @@ const Form = () => {
         qrCodeName,
         qrCodePrompt
       ).then((res) => {
-        if (res === 200) {
+        setKey(res.data.createNewRecord.key);
+        if (res.data.createNewRecord.key.length > 0) {
           sendTextConfirmation(phoneNumberWithCountryCode);
         }
       })

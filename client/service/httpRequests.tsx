@@ -8,7 +8,7 @@ mutation SendConfirmation($phoneNumber: String) {
 
 const newQrCodeMutation = `mutation CreateNewRecord($phoneNumber: String, $notificationId: String, $promptContent: String) {
   createNewRecord(phone_number: $phoneNumber, notification_id: $notificationId, prompt_content: $promptContent) {
-    id
+    key
   }
 }
 `;
@@ -46,9 +46,11 @@ export const createNewQrCodeRecord = async (
       query: newQrCodeMutation,
       variables: { phoneNumber, notificationId, promptContent },
     }),
-  }).then((response) => {
-    return response.status;
-  });
+  })
+    .then((r) => r.json())
+    .then((data) => {
+      return data;
+    });
   return res;
 };
 

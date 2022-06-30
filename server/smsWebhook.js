@@ -48,7 +48,6 @@ router.post("/sms", async (req, res) => {
       fromPhoneNumber
     );
     if (numberOfActivatedRecords > 0) {
-      console.log("hi");
       message = "Your QR Code is activated.";
     }
   }
