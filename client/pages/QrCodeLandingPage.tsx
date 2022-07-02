@@ -13,7 +13,14 @@ import {
   sendNotification,
 } from "../service/httpRequests";
 
-const QrCodeLandingPage = (query) => {
+interface QueryStringPropsType {
+  qrkey: string;
+}
+interface InitialPropsType {
+  query: QueryStringPropsType;
+}
+
+const QrCodeLandingPage = (query: QueryStringPropsType) => {
   const router = useRouter();
 
   const [qrKey, setQrKey] = useState("");
@@ -53,7 +60,7 @@ const QrCodeLandingPage = (query) => {
   );
 };
 
-QrCodeLandingPage.getInitialProps = async ({ query }) => {
+QrCodeLandingPage.getInitialProps = async ({ query }: InitialPropsType) => {
   return query;
 };
 
