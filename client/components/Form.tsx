@@ -55,10 +55,6 @@ const Form = ({ setKey }: FormPropsType) => {
     setAllowMemoInput(false);
   };
 
-  useEffect(() => {
-    console.log(allowMemoInput);
-  }, [allowMemoInput]);
-
   return (
     <div>
       <Input
