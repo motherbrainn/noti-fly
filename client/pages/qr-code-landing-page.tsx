@@ -23,8 +23,7 @@ const QrCodeLandingPage = (query: QueryStringPropsType) => {
   const onClickHandler = () => {
     sendNotification(qrKey, memoText);
     setMemoText("");
-    //redirect after submit?
-    router.push("/NotificationSent");
+    router.push("/notification-sent");
   };
 
   useEffect(() => {

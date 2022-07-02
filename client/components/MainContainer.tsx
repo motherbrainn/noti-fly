@@ -16,7 +16,7 @@ const MainContainer = () => {
           </div>
           <QRCode
             title="qr code"
-            value={`http://localhost:3000/QrCodeLandingPage?qrkey=${qrCodeKey}`}
+            value={`http://localhost:3000/qr-code-landing-page?qrkey=${qrCodeKey}`}
             bgColor={"#FFFFFF"}
             fgColor={"#000000"}
             size={256}
