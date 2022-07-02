@@ -1,10 +1,4 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import {
   createNewQrCodeRecord,
   removeInactiveRecordsForPhoneNumber,
@@ -18,14 +12,14 @@ interface FormPropsType {
 
 const Form = ({ setKey }: FormPropsType) => {
   const [phoneNumberInput, setPhoneNumberInput] = useState("");
-  const [notificationIdInput, setNotificationIdInput] = useState("");
+  const [notificationNameInput, setNotificationIdInput] = useState("");
   const [qrCodePromptInput, setQrCodePromptInput] = useState("");
   const [qrCodeNotificationInput, setQrCodeNotificationInput] = useState("");
   const [allowMemoInput, setAllowMemoInput] = useState(false);
 
   const submitHandler = async () => {
     const phoneNumberWithCountryCode = `+1${phoneNumberInput}`;
-    const qrCodeName = notificationIdInput;
+    const qrCodeName = notificationNameInput;
     const qrCodePrompt = qrCodePromptInput;
     const qrCodeNotificationPrompt = qrCodeNotificationInput;
     const qrCodeAllowMemoInput = allowMemoInput;
@@ -64,7 +58,7 @@ const Form = ({ setKey }: FormPropsType) => {
         type="text"
         value={phoneNumberInput}
         id={"phone-number"}
-        inputLabel={"Phone Number"}
+        inputLabel={"Phone Number to Send Notifications"}
         maxLength={10}
       />
       <Input
@@ -72,9 +66,9 @@ const Form = ({ setKey }: FormPropsType) => {
           setNotificationIdInput(e.target.value)
         }
         type="text"
-        value={notificationIdInput}
+        value={notificationNameInput}
         id={"qr-code-name"}
-        inputLabel={"QR Code Name"}
+        inputLabel={"Name for this notification record.. this is just for you"}
         maxLength={30}
       />
       <Input
@@ -84,7 +78,7 @@ const Form = ({ setKey }: FormPropsType) => {
         type="text"
         value={qrCodePromptInput}
         id={"qr-code-prompt"}
-        inputLabel={"QR Code Prompt"}
+        inputLabel={"What should users see when they scan your QR code?"}
         maxLength={60}
       />
       <Input
@@ -94,7 +88,9 @@ const Form = ({ setKey }: FormPropsType) => {
         type="text"
         value={qrCodeNotificationInput}
         id={"qr-code-notification-content"}
-        inputLabel={"QR Code Notification Content"}
+        inputLabel={
+          "Notification message you will receive when a user scans your QR code"
+        }
         maxLength={300}
       />
       <Input
@@ -104,7 +100,7 @@ const Form = ({ setKey }: FormPropsType) => {
         type="checkbox"
         checked={allowMemoInput}
         id={"qr-code-notification-content"}
-        inputLabel={"Allow memo to be sent with notification?"}
+        inputLabel={"Allow user memo to be sent with notification?"}
       />
       <button onClick={submitHandler}>add record</button>
     </div>
