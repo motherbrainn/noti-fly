@@ -6,7 +6,7 @@ const {
   deleteInactiveQrRecords,
   activateQrRecordForPhoneNumber,
   sendNotificationMessage,
-} = require("./queries");
+} = require("../queries/queries");
 
 const crypto = require("crypto");
 

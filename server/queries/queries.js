@@ -1,6 +1,6 @@
 const format = require("pg-format");
-const { sendTextMessage } = require("./utilities");
-const { pool } = require("./dbConnection");
+const { sendTextMessage } = require("../utilities");
+const { pool } = require("../dbConnection");
 
 /**
  * get records matching one of the input params

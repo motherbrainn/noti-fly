@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
 
-const { activateQrRecordForPhoneNumber } = require("./queries");
-const { sendTextMessage } = require("./utilities");
+const { activateQrRecordForPhoneNumber } = require("../queries/queries");
+const { sendTextMessage } = require("../utilities");
 
 router.post("/sms", async (req, res) => {
   const messageBody = req.body.Body.toUpperCase();

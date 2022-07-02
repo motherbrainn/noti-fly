@@ -2,8 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 var { graphqlHTTP } = require("express-graphql");
-const { schema, root } = require("./graphql");
-const { router } = require("./smsWebhook");
+const { schema, root } = require("./endpoints/graphql");
+const { router } = require("./endpoints/smsWebhook");
 const dotenv = require("dotenv");
 dotenv.config();
 
