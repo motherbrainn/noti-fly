@@ -23,8 +23,6 @@ const getQrRecords = async (id, key, phone_number, active) => {
       Object.values(queryParam[0])[0]
     );
     res = await pool.query(formattedQuery);
-  } else {
-    res = await pool.query("SELECT * FROM user_data ORDER BY id DESC");
   }
   return res.rows;
 };
