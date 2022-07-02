@@ -1,4 +1,10 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import {
   createNewQrCodeRecord,
   removeInactiveRecordsForPhoneNumber,
@@ -14,11 +20,15 @@ const Form = ({ setKey }: FormPropsType) => {
   const [phoneNumberInput, setPhoneNumberInput] = useState("");
   const [notificationIdInput, setNotificationIdInput] = useState("");
   const [qrCodePromptInput, setQrCodePromptInput] = useState("");
+  const [qrCodeNotificationInput, setQrCodeNotificationInput] = useState("");
+  const [allowMemoInput, setAllowMemoInput] = useState(false);
 
   const submitHandler = async () => {
     const phoneNumberWithCountryCode = `+1${phoneNumberInput}`;
     const qrCodeName = notificationIdInput;
     const qrCodePrompt = qrCodePromptInput;
+    const qrCodeNotificationPrompt = qrCodeNotificationInput;
+    const qrCodeAllowMemoInput = allowMemoInput;
 
     //remove inactivated records for phone number before creating a new one
     //create new QR code record in db, then send text confirmation
@@ -26,7 +36,9 @@ const Form = ({ setKey }: FormPropsType) => {
       createNewQrCodeRecord(
         phoneNumberWithCountryCode,
         qrCodeName,
-        qrCodePrompt
+        qrCodePrompt,
+        qrCodeNotificationPrompt,
+        qrCodeAllowMemoInput
       ).then((res) => {
         setKey(res.data.createNewRecord.key);
         if (res.data.createNewRecord.key.length > 0) {
@@ -39,7 +51,13 @@ const Form = ({ setKey }: FormPropsType) => {
     setPhoneNumberInput("");
     setNotificationIdInput("");
     setQrCodePromptInput("");
+    setQrCodeNotificationInput("");
+    setAllowMemoInput(false);
   };
+
+  useEffect(() => {
+    console.log(allowMemoInput);
+  }, [allowMemoInput]);
 
   return (
     <div>
@@ -47,6 +65,7 @@ const Form = ({ setKey }: FormPropsType) => {
         changeHandler={(e: ChangeEvent<HTMLInputElement>) =>
           setPhoneNumberInput(e.target.value)
         }
+        type="text"
         value={phoneNumberInput}
         id={"phone-number"}
         inputLabel={"Phone Number"}
@@ -56,6 +75,7 @@ const Form = ({ setKey }: FormPropsType) => {
         changeHandler={(e: ChangeEvent<HTMLInputElement>) =>
           setNotificationIdInput(e.target.value)
         }
+        type="text"
         value={notificationIdInput}
         id={"qr-code-name"}
         inputLabel={"QR Code Name"}
@@ -65,10 +85,30 @@ const Form = ({ setKey }: FormPropsType) => {
         changeHandler={(e: ChangeEvent<HTMLInputElement>) =>
           setQrCodePromptInput(e.target.value)
         }
+        type="text"
         value={qrCodePromptInput}
-        id={"qr-code-name"}
+        id={"qr-code-prompt"}
         inputLabel={"QR Code Prompt"}
-        maxLength={30}
+        maxLength={60}
+      />
+      <Input
+        changeHandler={(e: ChangeEvent<HTMLInputElement>) =>
+          setQrCodeNotificationInput(e.target.value)
+        }
+        type="text"
+        value={qrCodeNotificationInput}
+        id={"qr-code-notification-content"}
+        inputLabel={"QR Code Notification Content"}
+        maxLength={300}
+      />
+      <Input
+        changeHandler={() => {
+          setAllowMemoInput(!allowMemoInput);
+        }}
+        type="checkbox"
+        checked={allowMemoInput}
+        id={"qr-code-notification-content"}
+        inputLabel={"Allow memo to be sent with notification?"}
       />
       <button onClick={submitHandler}>add record</button>
     </div>

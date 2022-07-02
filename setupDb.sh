@@ -24,6 +24,8 @@ KEY VARCHAR,
 notification_id VARCHAR,
 phone_number VARCHAR,
 prompt_content VARCHAR,
+notification_content VARCHAR,
+allow_memo BOOL,
 active BOOL,
 created_at TIMESTAMPTZ DEFAULT Now()
 );

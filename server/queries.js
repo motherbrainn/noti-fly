@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const { Pool } = require("pg");
 const format = require("pg-format");
+const { sendTextMessage } = require("./utilities");
 
 const env = process.env.NODE_ENV;
 
@@ -24,7 +25,6 @@ const pool =
 
 const getRecords = async (id, key, phone_number, active) => {
   let res;
-
   const args = [{ id }, { key }, { phone_number }, { active }];
   const queryParam = args.filter((arg) => Object.values(arg)[0] !== undefined);
 
@@ -57,12 +57,22 @@ const createNewRecord = async (
   key,
   notification_id,
   phone_number,
-  prompt_content
+  prompt_content,
+  notification_content,
+  allow_memo
 ) => {
   let res;
   res = await pool.query(
-    "INSERT INTO user_data (key, notification_id, phone_number, prompt_content, active) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-    [key, notification_id, phone_number, prompt_content, false]
+    "INSERT INTO user_data (key, notification_id, phone_number, prompt_content, notification_content, allow_memo, active) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+    [
+      key,
+      notification_id,
+      phone_number,
+      prompt_content,
+      notification_content,
+      allow_memo,
+      false,
+    ]
   );
   return res.rows[0];
 };
@@ -96,10 +106,24 @@ const sendConfirmationMessage = (phoneNumber) => {
   return response;
 };
 
+const sendNotificationMessage = async (key, message) => {
+  //find phone number for key
+  const record = await getRecords(undefined, key);
+
+  const { phone_number, notification_content, allow_memo } = record[0];
+
+  //send notification for qr code
+  sendTextMessage(phone_number, notification_content);
+
+  //if allow memo is true, send memo message from user
+  allow_memo && sendTextMessage(phone_number, message);
+};
+
 module.exports = {
   sendConfirmationMessage,
   getRecords,
   createNewRecord,
   deleteInactiveRecords,
   activateRecordForPhoneNumber,
+  sendNotificationMessage,
 };

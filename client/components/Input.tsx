@@ -2,15 +2,19 @@ import { ChangeEvent, FormEvent } from "react";
 
 interface InputInterface {
   changeHandler: (e: ChangeEvent<HTMLInputElement>) => void;
-  value: string;
+  type: string;
+  value?: string;
+  checked?: boolean;
   id: string;
   inputLabel: string;
-  maxLength: number;
+  maxLength?: number;
 }
 
 const Input = ({
   changeHandler,
+  type,
   value,
+  checked,
   id,
   inputLabel,
   maxLength,
@@ -19,9 +23,10 @@ const Input = ({
     <div>
       <label>{inputLabel}</label>
       <input
-        type="text"
+        type={type}
         id={id}
         value={value}
+        checked={checked}
         maxLength={maxLength}
         onChange={(e) => changeHandler(e)}
       />
