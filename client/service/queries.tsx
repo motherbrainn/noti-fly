@@ -13,7 +13,7 @@ export const newQrCodeMutation = `mutation CreateNewRecord($phoneNumber: String,
 
 export const retrieveQrCodeRecordMutation = `
 query getRecords($key: String) {
-  getRecords(key: $key){key, prompt_content, allow_memo}
+  getRecords(key: $key){key, prompt_content, allow_memo, active}
 }
 `;
 

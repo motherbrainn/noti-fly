@@ -20,6 +20,7 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
   const [qrKey, setQrKey] = useState("");
   const [notificationData, setNotificationData] = useState();
   const [allowMemo, setAllowMemo] = useState(false);
+  const [qrCodeActive, setQrCodeActive] = useState(false);
   const [memoText, setMemoText] = useState("");
   const [qrCodeNotFound, setQrCodeNotFound] =
     useState<SetStateAction<undefined | number>>();
@@ -38,6 +39,7 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
       const qrCodeData = await retrieveQrCodeRecord(props.qrkey);
 
       if (qrCodeData.data.getRecords.length !== 0) {
+        setQrCodeActive(qrCodeData.data.getRecords[0].active);
         setNotificationData(qrCodeData.data.getRecords[0].prompt_content);
         setAllowMemo(qrCodeData.data.getRecords[0].allow_memo);
       } else setQrCodeNotFound(404);
@@ -50,7 +52,7 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
   return (
     <div>
       {(props.errorCode || qrCodeNotFound) && <Error statusCode={404} />}
-      {notificationData && (
+      {notificationData && qrCodeActive === true && (
         <div>
           <div>{notificationData}</div>
           {allowMemo && (
@@ -60,6 +62,11 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
             ></textarea>
           )}
           <button onClick={onClickHandler}>submit</button>
+        </div>
+      )}
+      {qrCodeActive === false && (
+        <div>
+          QR Code is not active. Check your phone to activate and try again.
         </div>
       )}
     </div>
