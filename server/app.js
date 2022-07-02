@@ -5,7 +5,6 @@ const dotenv = require("dotenv");
 var { graphqlHTTP } = require("express-graphql");
 dotenv.config();
 const PORT = process.env.PORT || 4000;
-const env = process.env.NODE_ENV;
 const { schema, root } = require("./graphql");
 const { router } = require("./smsWebhook");
 

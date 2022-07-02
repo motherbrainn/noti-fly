@@ -1,7 +1,5 @@
 import Head from "next/head";
-import Form from "../components/Form";
 import MainContainer from "../components/MainContainer";
-import QrCode from "../components/QrCode";
 import styles from "../styles/Home.module.css";
 
 const env = process.env.NODE_ENV;

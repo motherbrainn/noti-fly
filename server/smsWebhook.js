@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
-const { activateRecordForPhoneNumber } = require("./queries");
 const dotenv = require("dotenv");
 dotenv.config();
+
+const { activateRecordForPhoneNumber } = require("./queries");
 const { sendTextMessage } = require("./utilities");
 
 let fakeDb = [];

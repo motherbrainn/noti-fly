@@ -1,8 +1,9 @@
 const twilio = require("twilio");
-const dotenv = require("dotenv");
-dotenv.config();
 const { Pool } = require("pg");
 const format = require("pg-format");
+const dotenv = require("dotenv");
+dotenv.config();
+
 const { sendTextMessage } = require("./utilities");
 
 const env = process.env.NODE_ENV;
