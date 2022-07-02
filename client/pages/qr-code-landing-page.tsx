@@ -1,6 +1,6 @@
 import Error from "next/error";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import {
   retrieveQrCodeRecord,
   sendNotification,
@@ -21,7 +21,8 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
   const [notificationData, setNotificationData] = useState();
   const [allowMemo, setAllowMemo] = useState(false);
   const [memoText, setMemoText] = useState("");
-  const [qrCodeNotFound, setQrCodeNotFound] = useState(0);
+  const [qrCodeNotFound, setQrCodeNotFound] =
+    useState<SetStateAction<undefined | number>>();
 
   const onClickHandler = () => {
     //send notification, reset memo text, send user to confirmation page
@@ -49,14 +50,18 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
   return (
     <div>
       {(props.errorCode || qrCodeNotFound) && <Error statusCode={404} />}
-      {notificationData && <div>{notificationData}</div>}
-      {allowMemo && (
-        <textarea
-          value={memoText}
-          onChange={(e) => setMemoText(e.target.value)}
-        ></textarea>
+      {notificationData && (
+        <div>
+          <div>{notificationData}</div>
+          {allowMemo && (
+            <textarea
+              value={memoText}
+              onChange={(e) => setMemoText(e.target.value)}
+            ></textarea>
+          )}
+          <button onClick={onClickHandler}>submit</button>
+        </div>
       )}
-      <button onClick={onClickHandler}>submit</button>
     </div>
   );
 };
