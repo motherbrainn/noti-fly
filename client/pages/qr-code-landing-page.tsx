@@ -56,7 +56,7 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
           onChange={(e) => setMemoText(e.target.value)}
         ></textarea>
       )}
-      <button onClick={onClickHandler}>button</button>
+      <button onClick={onClickHandler}>submit</button>
     </div>
   );
 };
