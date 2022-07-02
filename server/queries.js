@@ -1,30 +1,16 @@
-const twilio = require("twilio");
-const { Pool } = require("pg");
 const format = require("pg-format");
-const dotenv = require("dotenv");
-dotenv.config();
-
 const { sendTextMessage } = require("./utilities");
+const { pool } = require("./dbConnection");
 
-const env = process.env.NODE_ENV;
-
-const pool =
-  env === "production"
-    ? new Pool({
-        connectionString: process.env.DATABASE_URL,
-        ssl: {
-          rejectUnauthorized: false,
-        },
-      })
-    : new Pool({
-        user: process.env.DB_USER,
-        host: "localhost",
-        database: process.env.DB_NAME,
-        password: process.env.DB_USER_PASSWORD,
-        port: process.env.DB_PORT,
-      });
-
-const getRecords = async (id, key, phone_number, active) => {
+/**
+ * get records matching one of the input params
+ * @param {*} id
+ * @param {*} key
+ * @param {*} phone_number
+ * @param {*} active
+ * @returns records matching only ONE of the input params, do not try to pass in more than 1 at a time
+ */
+const getQrRecords = async (id, key, phone_number, active) => {
   let res;
   const args = [{ id }, { key }, { phone_number }, { active }];
   const queryParam = args.filter((arg) => Object.values(arg)[0] !== undefined);
@@ -43,88 +29,109 @@ const getRecords = async (id, key, phone_number, active) => {
   return res.rows;
 };
 
-//return number of removed records
-const deleteInactiveRecords = async (phone_number) => {
+/**
+ * delete all inactive records for phone number
+ * @param {*} phoneNumber
+ * @returns number of removed inactive records
+ */
+const deleteInactiveQrRecords = async (phoneNumber) => {
   let res;
   res = await pool.query(
     "DELETE FROM user_data WHERE phone_number=$1 AND active=$2",
-    [phone_number, false]
+    [phoneNumber, false]
   );
   return res.rowCount;
 };
 
-//new record will always be created with active: false
-const createNewRecord = async (
+/**
+ * create new record with params. new records will always be created as 'inactive'
+ * @param {*} key
+ * @param {*} nofificationId
+ * @param {*} phoneNumber
+ * @param {*} promptContent
+ * @param {*} notificationContent
+ * @param {*} allowMemo
+ * @returns newly created record
+ */
+const createNewQrRecord = async (
   key,
-  notification_id,
-  phone_number,
-  prompt_content,
-  notification_content,
-  allow_memo
+  nofificationId,
+  phoneNumber,
+  promptContent,
+  notificationContent,
+  allowMemo
 ) => {
   let res;
   res = await pool.query(
     "INSERT INTO user_data (key, notification_id, phone_number, prompt_content, notification_content, allow_memo, active) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
     [
       key,
-      notification_id,
-      phone_number,
-      prompt_content,
-      notification_content,
-      allow_memo,
+      nofificationId,
+      phoneNumber,
+      promptContent,
+      notificationContent,
+      allowMemo,
       false,
     ]
   );
   return res.rows[0];
 };
 
-//activate inactivated instance for phone number. functionally, there should only ever be 1 inactivated instance for a phone number
-const activateRecordForPhoneNumber = async (phone_number) => {
+/**
+ * activate inactivated instance for phone number. functionally, there should only ever be 1 inactivated instance for a phone number
+ * @param {*} phoneNumber
+ * @returns number of updated rows (should always be === 1)
+ */
+const activateQrRecordForPhoneNumber = async (phoneNumber) => {
   let res;
   res = await pool.query(
     "UPDATE user_data SET active = $1 WHERE phone_number = $2",
-    [true, phone_number]
+    [true, phoneNumber]
   );
   return res.rowCount;
 };
 
-const sendConfirmationMessage = (phoneNumber) => {
-  const accountSid = process.env.TWILIO_ACCOUNT_SID; // Your Account SID from www.twilio.com/console
-  const authToken = process.env.TWILIO_AUTH_TOKEN; // Your Auth Token from www.twilio.com/console
-
-  const client = new twilio(accountSid, authToken);
-  const response = client.messages
-    .create({
-      body: "Reply with 'y' to opt in to text notifications for this QR code. Your QR code will not work until you opt in. Reply with 'stop' to unsubscribe",
-      to: phoneNumber, // Text this number
-      from: process.env.TWILIO_PHONE_NUMBER, // From a valid Twilio number
-    })
-    .then((message) => {
-      if (message.sid) {
-        return "ok";
-      }
-    });
+/**
+ * send confirmation text message to phone number
+ * @param {*} phoneNumber
+ * @returns 'ok' string if successful
+ */
+const sendConfirmationMessage = async (phoneNumber) => {
+  const confirmationMessage =
+    "Reply with 'y' to opt in to text notifications for this QR code. Your QR code will not work until you opt in. Reply with 'stop' to unsubscribe";
+  const response = await sendTextMessage(phoneNumber, confirmationMessage);
   return response;
 };
 
+/**
+ * send notification message to phone number defined by qr code record for key
+ * @param {*} key qr code record key
+ * @param {*} message message you would like to send for record
+ * @returns ['ok', false] if one message is sent succesfully, ['ok', ''] if two messages are send successfully
+ */
 const sendNotificationMessage = async (key, message) => {
   //find phone number for key
-  const record = await getRecords(undefined, key);
-
+  const record = await getQrRecords(undefined, key);
   const { phone_number, notification_content, allow_memo } = record[0];
 
   //send notification for qr code
-  sendTextMessage(phone_number, notification_content);
+  const sendNotificationResponse = await sendTextMessage(
+    phone_number,
+    notification_content
+  );
 
   //if allow memo is true, send memo message from user
-  allow_memo && sendTextMessage(phone_number, message);
+  const sendMemoResponse =
+    allow_memo && (await sendTextMessage(phone_number, message));
+
+  return [sendNotificationResponse, allow_memo ? sendMemoResponse : ""];
 };
 
 module.exports = {
   sendConfirmationMessage,
-  getRecords,
-  createNewRecord,
-  deleteInactiveRecords,
-  activateRecordForPhoneNumber,
+  getQrRecords,
+  createNewQrRecord,
+  deleteInactiveQrRecords,
+  activateQrRecordForPhoneNumber,
   sendNotificationMessage,
 };

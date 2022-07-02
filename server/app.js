@@ -1,12 +1,13 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const dotenv = require("dotenv");
 var { graphqlHTTP } = require("express-graphql");
-dotenv.config();
-const PORT = process.env.PORT || 4000;
 const { schema, root } = require("./graphql");
 const { router } = require("./smsWebhook");
+const dotenv = require("dotenv");
+dotenv.config();
+
+const PORT = process.env.PORT || 4000;
 
 const app = express();
 

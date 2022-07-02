@@ -1,10 +1,10 @@
 const { buildSchema } = require("graphql");
 const {
   sendConfirmationMessage,
-  getRecords,
-  createNewRecord,
-  deleteInactiveRecords,
-  activateRecordForPhoneNumber,
+  getQrRecords,
+  createNewQrRecord,
+  deleteInactiveQrRecords,
+  activateQrRecordForPhoneNumber,
   sendNotificationMessage,
 } = require("./queries");
 
@@ -23,7 +23,7 @@ const schema = buildSchema(`
     createNewRecord(key: String, notification_id: String, phone_number: String, prompt_content: String, notification_content: String, allow_memo: Boolean): User_Data,
     deleteInactiveRecords(phone_number: String): String,
     activateRecordForPhoneNumber(phone_number: String): String,
-    sendNotification(key: String, message: String): String,
+    sendNotification(key: String, message: String): [String],
   }
 
   type User_Data {
@@ -51,7 +51,7 @@ const root = {
   },
   //can pass only one of: id, key, phone_number, active (or pass nothing to get all)
   getRecords: ({ id, key, phone_number, active }) => {
-    const response = getRecords(id, key, phone_number, active);
+    const response = getQrRecords(id, key, phone_number, active);
     return response;
   },
   createNewRecord: ({
@@ -62,7 +62,7 @@ const root = {
     allow_memo,
   }) => {
     const key = crypto.randomBytes(20).toString("hex");
-    const response = createNewRecord(
+    const response = createNewQrRecord(
       key,
       notification_id,
       phone_number,
@@ -73,11 +73,11 @@ const root = {
     return response;
   },
   deleteInactiveRecords: ({ phone_number }) => {
-    const response = deleteInactiveRecords(phone_number);
+    const response = deleteInactiveQrRecords(phone_number);
     return response;
   },
   activateRecordForPhoneNumber: ({ phone_number }) => {
-    const response = activateRecordForPhoneNumber(phone_number);
+    const response = activateQrRecordForPhoneNumber(phone_number);
     return response;
   },
 };
