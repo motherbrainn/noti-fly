@@ -4,6 +4,7 @@ import styles from "../styles/Home.module.css";
 
 const env = process.env.NODE_ENV;
 const PROD_API_URL = process.env.PROD_API_URL;
+console.log(process.env);
 
 export const serverAddress =
   env === "production" ? PROD_API_URL : "http://localhost:4000";
