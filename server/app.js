@@ -8,13 +8,14 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const PORT = process.env.PORT || 4000;
+const PROD_CLIENT_URL = process.env.CLIENT_URL;
 
 const app = express();
 
 //set cors here to allow requests from client
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://notify-red.vercel.app"],
+    origin: ["http://localhost:3000", PROD_CLIENT_URL],
     credentials: true,
   })
 );
