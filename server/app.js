@@ -14,7 +14,7 @@ const app = express();
 //set cors here to allow requests from client
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://tipster-api.herokuapp.com/"],
+    origin: ["http://localhost:3000", "https://notify-red.vercel.app"],
     credentials: true,
   })
 );
