@@ -8,7 +8,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const PORT = process.env.PORT || 4000;
-const PROD_CLIENT_URL = process.env.CLIENT_URL;
+const PROD_CLIENT_URL = process.env.PROD_CLIENT_URL;
 
 const app = express();
 

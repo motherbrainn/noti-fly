@@ -6,6 +6,7 @@ const env = process.env.NODE_ENV;
 const PROD_CLIENT_URL = process.env.API_URL;
 
 const clientUrl = env === "production" ? PROD_CLIENT_URL : "localhost:3000";
+console.log("client url: ", clientUrl);
 
 const MainContainer = () => {
   const [qrCodeKey, setQrCodeKey] = useState();
