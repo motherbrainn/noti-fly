@@ -11,11 +11,11 @@ const Home: any = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Notify</title>
-        <meta name="description" content="Notify App" />
+        <title>Tipster</title>
+        <meta name="description" content="Tipster App" />
       </Head>
       <div>
-        <h1>notify</h1>
+        <h1>Tipster</h1>
         <MainContainer />
       </div>
     </div>

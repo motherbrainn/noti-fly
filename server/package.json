@@ -1,5 +1,5 @@
 {
-  "name": "notify-server",
+  "name": "tipster-server",
   "version": "1.0.0",
   "main": "app.js",
   "author": "motherbrainn",
