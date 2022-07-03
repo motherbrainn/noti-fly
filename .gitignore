@@ -40,6 +40,8 @@ client/*.tsbuildinfo
 
 
 #server
-
 server/node_modules
 server/.env
+
+#deployment
+deploy.sh
