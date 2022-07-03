@@ -1,4 +1,7 @@
 const twilio = require("twilio");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const sendTextMessage = async (phoneNumber, messageContent) => {
   const accountSid = process.env.TWILIO_ACCOUNT_SID; // Your Account SID from www.twilio.com/console
