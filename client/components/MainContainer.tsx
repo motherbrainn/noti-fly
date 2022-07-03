@@ -4,6 +4,9 @@ import Form from "./Form";
 
 const env = process.env.NODE_ENV;
 
+const serverUrl =
+  env === "production" ? "https://notify-red.vercel.app" : "localhost:3000";
+
 const MainContainer = () => {
   const [qrCodeKey, setQrCodeKey] = useState();
 
@@ -18,7 +21,7 @@ const MainContainer = () => {
           </div>
           <QRCode
             title="qr code"
-            value={`https://notify-red.vercel.app/qr-code-landing-page?qrkey=${qrCodeKey}`}
+            value={`${serverUrl}/qr-code-landing-page?qrkey=${qrCodeKey}`}
             bgColor={"#FFFFFF"}
             fgColor={"#000000"}
             size={256}
