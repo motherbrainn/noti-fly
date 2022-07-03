@@ -15,7 +15,6 @@ router.post("/sms", async (req, res) => {
     const numberOfActivatedRecords = await activateQrRecordForPhoneNumber(
       fromPhoneNumber
     );
-    console.log(numberOfActivatedRecords);
     if (numberOfActivatedRecords > 0) {
       message = "Your QR Code is activated.";
     }

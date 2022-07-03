@@ -7,8 +7,6 @@ const sendTextMessage = async (phoneNumber, messageContent) => {
   const accountSid = process.env.TWILIO_ACCOUNT_SID; // Your Account SID from www.twilio.com/console
   const authToken = process.env.TWILIO_AUTH_TOKEN; // Your Auth Token from www.twilio.com/console
 
-  console.log(accountSid);
-  console.log(authToken);
   const client = new twilio(accountSid, authToken);
   const response = client.messages
     .create({
