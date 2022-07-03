@@ -6,7 +6,7 @@ const env = process.env.NODE_ENV;
 const PROD_API_URL = process.env.PROD_API_URL;
 
 export const serverAddress =
-  env === "development" ? "http://localhost:4000" : PROD_API_URL;
+  env === "production" ? PROD_API_URL : "http://localhost:4000";
 
 console.log("server address: ", serverAddress);
 
