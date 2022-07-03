@@ -3,10 +3,10 @@ import QRCode from "react-qr-code";
 import Form from "./Form";
 
 const env = process.env.NODE_ENV;
+const API_URL = process.env.API_URL;
 console.log(env);
 
-const serverUrl =
-  env === "production" ? "https://notify-red.vercel.app" : "localhost:3000";
+const serverUrl = env === "production" ? API_URL : "localhost:3000";
 console.log(`${serverUrl}/qr-code-landing-page?qrkey=zzz`);
 
 const MainContainer = () => {
