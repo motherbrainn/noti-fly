@@ -7,7 +7,7 @@ const env = process.env.NODE_ENV;
 export const serverAddress =
   env === "development"
     ? "http://localhost:4000"
-    : "https://tipster-api.herokuapp.com/";
+    : "https://tipster-api.herokuapp.com";
 
 const Home: any = () => {
   return (
