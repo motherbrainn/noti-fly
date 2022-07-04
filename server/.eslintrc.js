@@ -9,4 +9,5 @@ module.exports = {
     ecmaVersion: "latest",
   },
   rules: {},
+  ignorePatterns: ["node_modules/"],
 };

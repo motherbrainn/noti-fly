@@ -4,10 +4,11 @@
   "main": "app.js",
   "author": "motherbrainn",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "scripts": {
     "start": "node app.js",
-    "devStart": "nodemon app.js"
+    "devStart": "nodemon app.js",
+    "lint": "eslint '**/*.js'"
   },
   "dependencies": {
     "cors": "^2.8.5",
