@@ -19,5 +19,8 @@
     "pg": "^8.7.3",
     "pg-format": "^1.0.4",
     "twilio": "^3.77.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.19.0"
   }
 }
