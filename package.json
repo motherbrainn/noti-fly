@@ -1,0 +1,17 @@
+{
+  "name": "tipster",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/motherbrainn/notify.git",
+  "author": "motherbrainn",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "devStart": "concurrently \"cd server && yarn run dev\" \"cd client && yarn run dev\"",
+    "ngrok": "ngrok http 4000",
+    "install-tipster": "concurrently \"cd client && yarn install\" \"cd server && yarn install \""
+  },
+  "devDependencies": {
+    "concurrently": "^7.2.2"
+  }
+}

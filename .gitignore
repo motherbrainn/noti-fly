@@ -45,3 +45,6 @@ server/.env
 
 #deployment
 deploy.sh
+
+#root level node modules
+node_modules
