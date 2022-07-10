@@ -1,4 +1,11 @@
-import { Alert, Button, Checkbox, Collapse, TextField } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Collapse,
+  FormControlLabel,
+  TextField,
+} from "@mui/material";
 import {
   ChangeEvent,
   Dispatch,
@@ -212,10 +219,16 @@ const Form = ({ setKey, setPrompt }: FormPropsType) => {
       <Collapse in={validations.invalidNotification}>
         {invalidNotification}
       </Collapse>
-      <Checkbox
-        checked={allowMemoInput}
-        onChange={allowMemoInputChangeHandler}
-        inputProps={{ id: "allow-memo" }}
+
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={allowMemoInput}
+            onChange={allowMemoInputChangeHandler}
+            inputProps={{ id: "allow-memo" }}
+          />
+        }
+        label="Allow Memo"
       />
       <Button
         disabled={!allowSumbit}
