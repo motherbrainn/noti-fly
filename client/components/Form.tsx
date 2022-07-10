@@ -1,34 +1,54 @@
+import { Alert, Checkbox, Collapse, TextField } from "@mui/material";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import {
   createNewQrCodeRecord,
   removeInactiveRecordsForPhoneNumber,
 } from "../service/httpRequests";
 import { sendConfirmationTextMessage as sendTextConfirmation } from "../service/httpRequests";
-import Input from "./Input";
+import { isValidPhoneNumber } from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import Input from "react-phone-number-input/input";
+import { E164Number } from "libphonenumber-js/core";
+import DOMPurify from "dompurify";
+
+const sanitizer = DOMPurify.sanitize;
 
 interface FormPropsType {
   setKey: Dispatch<SetStateAction<undefined>>;
 }
 
 const Form = ({ setKey }: FormPropsType) => {
-  const [phoneNumberInput, setPhoneNumberInput] = useState("");
+  const [phoneNumberInput, setPhoneNumberInput] = useState<
+    E164Number | undefined
+  >("");
   const [notificationNameInput, setNotificationIdInput] = useState("");
   const [qrCodePromptInput, setQrCodePromptInput] = useState("");
   const [qrCodeNotificationInput, setQrCodeNotificationInput] = useState("");
   const [allowMemoInput, setAllowMemoInput] = useState(false);
+  const [errorState, setErrorState] = useState(false);
 
   const submitHandler = async () => {
-    const phoneNumberWithCountryCode = `+1${phoneNumberInput}`;
-    const qrCodeName = notificationNameInput;
-    const qrCodePrompt = qrCodePromptInput;
-    const qrCodeNotificationPrompt = qrCodeNotificationInput;
+    //guard againsts undefined phoneNumberInput
+    if (phoneNumberInput === undefined) {
+      return;
+    }
+    //show error if not valid phone number
+    if (isValidPhoneNumber(phoneNumberInput) !== true) {
+      setErrorState(true);
+      return;
+    }
+
+    const qrCodeName = sanitizer(notificationNameInput);
+    const qrCodePrompt = sanitizer(qrCodePromptInput);
+    const qrCodeNotificationPrompt = sanitizer(qrCodeNotificationInput);
     const qrCodeAllowMemoInput = allowMemoInput;
+    const qrCodePhoneNumber = sanitizer(phoneNumberInput);
 
     //remove inactivated records for phone number before creating a new one
     //create new QR code record in db, then send text confirmation
-    removeInactiveRecordsForPhoneNumber(phoneNumberWithCountryCode).then(() =>
+    removeInactiveRecordsForPhoneNumber(qrCodePhoneNumber).then(() =>
       createNewQrCodeRecord(
-        phoneNumberWithCountryCode,
+        qrCodePhoneNumber,
         qrCodeName,
         qrCodePrompt,
         qrCodeNotificationPrompt,
@@ -36,7 +56,7 @@ const Form = ({ setKey }: FormPropsType) => {
       ).then((res) => {
         setKey(res.data.createNewRecord.key);
         if (res.data.createNewRecord.key.length > 0) {
-          sendTextConfirmation(phoneNumberWithCountryCode);
+          sendTextConfirmation(qrCodePhoneNumber);
         }
       })
     );
@@ -49,58 +69,67 @@ const Form = ({ setKey }: FormPropsType) => {
     setAllowMemoInput(false);
   };
 
+  const errorAlert = (
+    <Alert severity="error">Enter valid 10 digit phone number. </Alert>
+  );
+
+  const phoneNumberChangeHandler = (e: E164Number | undefined) => {
+    if (errorState === true) {
+      setErrorState(false);
+    }
+    setPhoneNumberInput(e);
+  };
+
+  const qrCodeNameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setNotificationIdInput(e.target.value);
+  };
+
+  const qrCodePromptChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setQrCodePromptInput(e.target.value);
+  };
+
+  const qrCodeNotificationChangeHandler = (
+    e: ChangeEvent<HTMLInputElement>
+  ) => {
+    setQrCodeNotificationInput(e.target.value);
+  };
+
+  const allowMemoInputChangeHandler = () => {
+    setAllowMemoInput(!allowMemoInput);
+  };
+
   return (
     <div>
       <Input
-        changeHandler={(e: ChangeEvent<HTMLInputElement>) =>
-          setPhoneNumberInput(e.target.value)
-        }
-        type="text"
+        maxLength="14"
+        placeholder="Phone number to send notifications"
         value={phoneNumberInput}
-        id={"phone-number"}
-        inputLabel={"Phone Number to Send Notifications"}
-        maxLength={10}
+        onChange={phoneNumberChangeHandler}
+        country="US"
       />
-      <Input
-        changeHandler={(e: ChangeEvent<HTMLInputElement>) =>
-          setNotificationIdInput(e.target.value)
-        }
-        type="text"
+      <Collapse in={errorState}>{errorAlert}</Collapse>
+      <TextField
+        id="qr-code-name"
+        label="Name for this notification record.. this is just for you"
         value={notificationNameInput}
-        id={"qr-code-name"}
-        inputLabel={"Name for this notification record.. this is just for you"}
-        maxLength={30}
+        onChange={qrCodeNameChangeHandler}
       />
-      <Input
-        changeHandler={(e: ChangeEvent<HTMLInputElement>) =>
-          setQrCodePromptInput(e.target.value)
-        }
-        type="text"
+      <TextField
+        id="qr-code-prompt"
+        label="What should users see when they scan your QR code?"
         value={qrCodePromptInput}
-        id={"qr-code-prompt"}
-        inputLabel={"What should users see when they scan your QR code?"}
-        maxLength={60}
+        onChange={qrCodePromptChangeHandler}
       />
-      <Input
-        changeHandler={(e: ChangeEvent<HTMLInputElement>) =>
-          setQrCodeNotificationInput(e.target.value)
-        }
-        type="text"
+      <TextField
+        id="qr-code-notification-content"
+        label="Notification message you will receive when a user scans your QR code"
         value={qrCodeNotificationInput}
-        id={"qr-code-notification-content"}
-        inputLabel={
-          "Notification message you will receive when a user scans your QR code"
-        }
-        maxLength={300}
+        onChange={qrCodeNotificationChangeHandler}
       />
-      <Input
-        changeHandler={() => {
-          setAllowMemoInput(!allowMemoInput);
-        }}
-        type="checkbox"
+      <Checkbox
         checked={allowMemoInput}
-        id={"qr-code-notification-content"}
-        inputLabel={"Allow user memo to be sent with notification?"}
+        onChange={allowMemoInputChangeHandler}
+        inputProps={{ id: "allow-memo" }}
       />
       <button onClick={submitHandler}>add record</button>
     </div>
