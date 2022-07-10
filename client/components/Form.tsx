@@ -1,5 +1,11 @@
-import { Alert, Checkbox, Collapse, TextField } from "@mui/material";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { Alert, Button, Checkbox, Collapse, TextField } from "@mui/material";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import {
   createNewQrCodeRecord,
   removeInactiveRecordsForPhoneNumber,
@@ -25,7 +31,29 @@ const Form = ({ setKey }: FormPropsType) => {
   const [qrCodePromptInput, setQrCodePromptInput] = useState("");
   const [qrCodeNotificationInput, setQrCodeNotificationInput] = useState("");
   const [allowMemoInput, setAllowMemoInput] = useState(false);
-  const [errorState, setErrorState] = useState(false);
+
+  const [validations, setValidations] = useState({
+    invalidPhoneNumber: false,
+    invalidName: false,
+    invalidPrompt: false,
+    invalidNotification: false,
+  });
+
+  const [allowSumbit, setAllowSubmit] = useState(false);
+
+  useEffect(() => {
+    if (
+      notificationNameInput.length > 0 &&
+      qrCodePromptInput.length > 0 &&
+      qrCodeNotificationInput.length > 0
+    ) {
+      setAllowSubmit(true);
+    } else setAllowSubmit(false);
+  }, [
+    notificationNameInput.length,
+    qrCodeNotificationInput,
+    qrCodePromptInput,
+  ]);
 
   const submitHandler = async () => {
     //guard againsts undefined phoneNumberInput
@@ -34,7 +62,10 @@ const Form = ({ setKey }: FormPropsType) => {
     }
     //show error if not valid phone number
     if (isValidPhoneNumber(phoneNumberInput) !== true) {
-      setErrorState(true);
+      setValidations((prevState) => ({
+        ...prevState,
+        invalidPhoneNumber: true,
+      }));
       return;
     }
 
@@ -43,6 +74,23 @@ const Form = ({ setKey }: FormPropsType) => {
     const qrCodeNotificationPrompt = sanitizer(qrCodeNotificationInput);
     const qrCodeAllowMemoInput = allowMemoInput;
     const qrCodePhoneNumber = sanitizer(phoneNumberInput);
+
+    if (
+      qrCodeName.length === 0 ||
+      qrCodePrompt.length === 0 ||
+      qrCodeNotificationPrompt.length === 0
+    ) {
+      qrCodeName.length === 0 &&
+        setValidations((prevState) => ({ ...prevState, invalidName: true }));
+      qrCodePrompt.length === 0 &&
+        setValidations((prevState) => ({ ...prevState, invalidPrompt: true }));
+      qrCodeNotificationPrompt.length === 0 &&
+        setValidations((prevState) => ({
+          ...prevState,
+          invalidNotification: true,
+        }));
+      return;
+    }
 
     //remove inactivated records for phone number before creating a new one
     //create new QR code record in db, then send text confirmation
@@ -69,28 +117,56 @@ const Form = ({ setKey }: FormPropsType) => {
     setAllowMemoInput(false);
   };
 
-  const errorAlert = (
-    <Alert severity="error">Enter valid 10 digit phone number. </Alert>
+  const invalidPhoneNumber = (
+    <Alert severity="error">Enter valid 10 digit phone number.</Alert>
+  );
+  const invalidName = <Alert severity="error">Enter valid name.</Alert>;
+  const invalidPrompt = (
+    <Alert severity="error">Enter valid notification prompt.</Alert>
+  );
+  const invalidNotification = (
+    <Alert severity="error">Enter valid notification message.</Alert>
   );
 
   const phoneNumberChangeHandler = (e: E164Number | undefined) => {
-    if (errorState === true) {
-      setErrorState(false);
+    if (validations.invalidPhoneNumber === true) {
+      setValidations((prevState) => ({
+        ...prevState,
+        invalidPhoneNumber: false,
+      }));
     }
     setPhoneNumberInput(e);
   };
 
   const qrCodeNameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (validations.invalidName === true) {
+      setValidations((prevState) => ({
+        ...prevState,
+        invalidName: false,
+      }));
+    }
     setNotificationIdInput(e.target.value);
   };
 
   const qrCodePromptChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (validations.invalidPrompt === true) {
+      setValidations((prevState) => ({
+        ...prevState,
+        invalidPrompt: false,
+      }));
+    }
     setQrCodePromptInput(e.target.value);
   };
 
   const qrCodeNotificationChangeHandler = (
     e: ChangeEvent<HTMLInputElement>
   ) => {
+    if (validations.invalidNotification === true) {
+      setValidations((prevState) => ({
+        ...prevState,
+        invalidNotification: false,
+      }));
+    }
     setQrCodeNotificationInput(e.target.value);
   };
 
@@ -107,31 +183,44 @@ const Form = ({ setKey }: FormPropsType) => {
         onChange={phoneNumberChangeHandler}
         country="US"
       />
-      <Collapse in={errorState}>{errorAlert}</Collapse>
+      <Collapse in={validations.invalidPhoneNumber}>
+        {invalidPhoneNumber}
+      </Collapse>
       <TextField
         id="qr-code-name"
         label="Name for this notification record.. this is just for you"
         value={notificationNameInput}
         onChange={qrCodeNameChangeHandler}
       />
+      <Collapse in={validations.invalidName}>{invalidName}</Collapse>
       <TextField
         id="qr-code-prompt"
         label="What should users see when they scan your QR code?"
         value={qrCodePromptInput}
         onChange={qrCodePromptChangeHandler}
       />
+      <Collapse in={validations.invalidPrompt}>{invalidPrompt}</Collapse>
       <TextField
         id="qr-code-notification-content"
         label="Notification message you will receive when a user scans your QR code"
         value={qrCodeNotificationInput}
         onChange={qrCodeNotificationChangeHandler}
       />
+      <Collapse in={validations.invalidNotification}>
+        {invalidNotification}
+      </Collapse>
       <Checkbox
         checked={allowMemoInput}
         onChange={allowMemoInputChangeHandler}
         inputProps={{ id: "allow-memo" }}
       />
-      <button onClick={submitHandler}>add record</button>
+      <Button
+        disabled={!allowSumbit}
+        variant="contained"
+        onClick={submitHandler}
+      >
+        add record
+      </Button>
     </div>
   );
 };
