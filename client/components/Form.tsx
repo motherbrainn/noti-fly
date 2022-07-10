@@ -20,10 +20,11 @@ import DOMPurify from "dompurify";
 const sanitizer = DOMPurify.sanitize;
 
 interface FormPropsType {
-  setKey: Dispatch<SetStateAction<undefined>>;
+  setKey: Dispatch<SetStateAction<string>>;
+  setPrompt: Dispatch<SetStateAction<string>>;
 }
 
-const Form = ({ setKey }: FormPropsType) => {
+const Form = ({ setKey, setPrompt }: FormPropsType) => {
   const [phoneNumberInput, setPhoneNumberInput] = useState<
     E164Number | undefined
   >("");
@@ -103,6 +104,8 @@ const Form = ({ setKey }: FormPropsType) => {
         qrCodeAllowMemoInput
       ).then((res) => {
         setKey(res.data.createNewRecord.key);
+        //probably should set prompt with return from createNewQrCodeRecord for consistency.. not sure if I care enough to change the return though
+        setPrompt(qrCodePrompt);
         if (res.data.createNewRecord.key.length > 0) {
           sendTextConfirmation(qrCodePhoneNumber);
         }
