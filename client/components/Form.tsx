@@ -192,11 +192,14 @@ const Form = ({ setKey, setPrompt }: FormPropsType) => {
         value={phoneNumberInput}
         onChange={phoneNumberChangeHandler}
         country="US"
+        className="phone-input"
       />
       <Collapse in={validations.invalidPhoneNumber}>
         {invalidPhoneNumber}
       </Collapse>
       <TextField
+        fullWidth
+        margin="normal"
         id="qr-code-name"
         label="Name for this notification record.. this is just for you"
         value={notificationNameInput}
@@ -204,6 +207,9 @@ const Form = ({ setKey, setPrompt }: FormPropsType) => {
       />
       <Collapse in={validations.invalidName}>{invalidName}</Collapse>
       <TextField
+        fullWidth
+        multiline
+        margin="normal"
         id="qr-code-prompt"
         label="What should users see when they scan your QR code?"
         value={qrCodePromptInput}
@@ -211,6 +217,9 @@ const Form = ({ setKey, setPrompt }: FormPropsType) => {
       />
       <Collapse in={validations.invalidPrompt}>{invalidPrompt}</Collapse>
       <TextField
+        fullWidth
+        multiline
+        margin="normal"
         id="qr-code-notification-content"
         label="Notification message you will receive when a user scans your QR code"
         value={qrCodeNotificationInput}
@@ -219,24 +228,29 @@ const Form = ({ setKey, setPrompt }: FormPropsType) => {
       <Collapse in={validations.invalidNotification}>
         {invalidNotification}
       </Collapse>
-
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={allowMemoInput}
-            onChange={allowMemoInputChangeHandler}
-            inputProps={{ id: "allow-memo" }}
-          />
-        }
-        label="Allow Memo"
-      />
-      <Button
-        disabled={!allowSumbit}
-        variant="contained"
-        onClick={submitHandler}
-      >
-        add record
-      </Button>
+      <div style={{ width: "fit-content", margin: "auto" }}>
+        <FormControlLabel
+          style={{ alignSelf: "start" }}
+          control={
+            <Checkbox
+              checked={allowMemoInput}
+              onChange={allowMemoInputChangeHandler}
+              inputProps={{ id: "allow-memo" }}
+            />
+          }
+          label="Allow Memo"
+        />
+      </div>
+      <div style={{ width: "fit-content", margin: "auto" }}>
+        <Button
+          size="large"
+          disabled={!allowSumbit}
+          variant="contained"
+          onClick={submitHandler}
+        >
+          add record
+        </Button>
+      </div>
     </div>
   );
 };
