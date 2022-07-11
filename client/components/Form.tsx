@@ -53,12 +53,15 @@ const Form = ({ setKey, setPrompt }: FormPropsType) => {
     if (
       notificationNameInput.length > 0 &&
       qrCodePromptInput.length > 0 &&
-      qrCodeNotificationInput.length > 0
+      qrCodeNotificationInput.length > 0 &&
+      phoneNumberInput &&
+      phoneNumberInput.length > 0
     ) {
       setAllowSubmit(true);
     } else setAllowSubmit(false);
   }, [
     notificationNameInput.length,
+    phoneNumberInput,
     qrCodeNotificationInput,
     qrCodePromptInput,
   ]);
@@ -193,6 +196,7 @@ const Form = ({ setKey, setPrompt }: FormPropsType) => {
         onChange={phoneNumberChangeHandler}
         country="US"
         className="phone-input"
+        style={{ borderRadius: "5px", borderWidth: "thin", height: "3.5rem" }}
       />
       <Collapse in={validations.invalidPhoneNumber}>
         {invalidPhoneNumber}
