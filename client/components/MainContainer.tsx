@@ -36,12 +36,26 @@ const MainContainer = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title" className="hide-when-printing">
+        <DialogTitle
+          id="alert-dialog-title"
+          className="hide-when-printing"
+          sx={{ textAlign: "center", width: "fit-content" }}
+        >
           YOUR QR CODE IS NOT ACTIVE UNTIL YOU CONFIRM VIA TEXT.. CHECK YOUR
           PHONE
         </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+        <DialogContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            textAlign: "center",
+            alignItems: "center",
+          }}
+        >
+          <DialogContentText
+            id="alert-dialog-description"
+            sx={{ wordBreak: "break-all", whiteSpace: "normal" }}
+          >
             {qrCodePrompt}
           </DialogContentText>
           <QRCode
@@ -50,6 +64,7 @@ const MainContainer = () => {
             bgColor={"#FFFFFF"}
             fgColor={"#000000"}
             size={256}
+            style={{ margin: "16px" }}
           />
         </DialogContent>
         <DialogActions>
