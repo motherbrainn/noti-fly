@@ -199,7 +199,13 @@ const Form = ({ setKey, setPrompt, setIsLoading }: FormPropsType) => {
         onChange={phoneNumberChangeHandler}
         country="US"
         className="phone-input"
-        style={{ borderRadius: "5px", borderWidth: "thin", height: "3.5rem" }}
+        style={{
+          borderRadius: "5px",
+          borderWidth: "thin",
+          height: "3.5rem",
+          borderColor: "rgb(169 178 183)",
+          borderStyle: "solid",
+        }}
       />
       <Collapse in={validations.invalidPhoneNumber}>
         {invalidPhoneNumber}
