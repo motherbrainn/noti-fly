@@ -119,17 +119,18 @@ const Form = ({ setKey, setPrompt, setIsLoading }: FormPropsType) => {
         setPrompt(qrCodePrompt);
         if (res.data.createNewRecord.key.length > 0) {
           sendTextConfirmation(qrCodePhoneNumber);
+
+          //clear prompts
+          setPhoneNumberInput("");
+          setNotificationIdInput("");
+          setQrCodePromptInput("");
+          setQrCodeNotificationInput("");
+          setAllowMemoInput(false);
+
           setIsLoading(false);
         }
       })
     );
-
-    //clear prompts
-    setPhoneNumberInput("");
-    setNotificationIdInput("");
-    setQrCodePromptInput("");
-    setQrCodeNotificationInput("");
-    setAllowMemoInput(false);
   };
 
   const invalidPhoneNumber = (
