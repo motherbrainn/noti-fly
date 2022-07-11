@@ -1,5 +1,7 @@
 import {
+  Backdrop,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -18,6 +20,7 @@ const clientUrl = env === "production" ? PROD_CLIENT_URL : "localhost:3000";
 const MainContainer = () => {
   const [qrCodeKey, setQrCodeKey] = useState("");
   const [qrCodePrompt, setQrCodePrompt] = useState("");
+  const [loading, setIsLoading] = useState(false);
 
   const handleClose = () => {
     setQrCodeKey("");
@@ -29,7 +32,18 @@ const MainContainer = () => {
 
   return (
     <div>
-      <Form setKey={setQrCodeKey} setPrompt={setQrCodePrompt} />
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Form
+        setKey={setQrCodeKey}
+        setPrompt={setQrCodePrompt}
+        setIsLoading={setIsLoading}
+      />
       <Dialog
         open={qrCodeKey.length > 0 && true}
         onClose={handleClose}

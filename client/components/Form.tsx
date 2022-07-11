@@ -29,9 +29,10 @@ const sanitizer = DOMPurify.sanitize;
 interface FormPropsType {
   setKey: Dispatch<SetStateAction<string>>;
   setPrompt: Dispatch<SetStateAction<string>>;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-const Form = ({ setKey, setPrompt }: FormPropsType) => {
+const Form = ({ setKey, setPrompt, setIsLoading }: FormPropsType) => {
   const [phoneNumberInput, setPhoneNumberInput] = useState<
     E164Number | undefined
   >("");
@@ -102,7 +103,7 @@ const Form = ({ setKey, setPrompt }: FormPropsType) => {
         }));
       return;
     }
-
+    setIsLoading(true);
     //remove inactivated records for phone number before creating a new one
     //create new QR code record in db, then send text confirmation
     removeInactiveRecordsForPhoneNumber(qrCodePhoneNumber).then(() =>
@@ -118,6 +119,7 @@ const Form = ({ setKey, setPrompt }: FormPropsType) => {
         setPrompt(qrCodePrompt);
         if (res.data.createNewRecord.key.length > 0) {
           sendTextConfirmation(qrCodePhoneNumber);
+          setIsLoading(false);
         }
       })
     );
