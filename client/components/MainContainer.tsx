@@ -42,6 +42,7 @@ const MainContainer = () => {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        PaperProps={{ sx: { backgroundColor: "aliceblue" } }}
       >
         <DialogTitle
           id="alert-dialog-title"
@@ -61,25 +62,25 @@ const MainContainer = () => {
         >
           <DialogContentText
             id="alert-dialog-description"
-            sx={{ wordBreak: "break-all", whiteSpace: "normal" }}
+            sx={{
+              wordBreak: "break-all",
+              whiteSpace: "normal",
+              fontStyle: "italic",
+            }}
           >
             {qrCodePrompt}
           </DialogContentText>
           <QRCode
             title="qr code"
             value={`${clientUrl}/qr-code-landing-page?qrkey=${qrCodeKey}`}
-            bgColor={"#FFFFFF"}
-            fgColor={"#000000"}
+            bgColor={"aliceblue"}
+            fgColor={"#2FA8FF"}
             size={256}
             style={{ margin: "16px" }}
           />
         </DialogContent>
         <DialogActions>
-          <Button
-            onClick={handlePrint}
-            className="hide-when-printing"
-            autoFocus
-          >
+          <Button onClick={handlePrint} className="hide-when-printing">
             Print Notification QR Code
           </Button>
           <Button onClick={handleClose} className="hide-when-printing">
