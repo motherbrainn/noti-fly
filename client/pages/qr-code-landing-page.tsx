@@ -7,6 +7,7 @@ import {
   TextField,
 } from "@mui/material";
 import Error from "next/error";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import {
@@ -66,6 +67,10 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
 
   return (
     <div className={styles.container}>
+      <Head>
+        <title>Tipster</title>
+        <meta name="description" content="Tipster App" />
+      </Head>
       {(props.errorCode || qrCodeNotFound) && <Error statusCode={404} />}
       {notificationData && qrCodeActive === true && (
         <div
