@@ -29,4 +29,7 @@ a {
   .hide-when-printing {
     display: none !important;
   }
+  .show-when-printing {
+    display: block !important;
+  }
 }

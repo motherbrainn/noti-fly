@@ -1,10 +1,4 @@
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@mui/material";
+import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import Head from "next/head";
 import router from "next/router";
 import styles from "../styles/Home.module.css";

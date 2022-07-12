@@ -78,6 +78,14 @@ const MainContainer = () => {
             size={256}
             style={{ margin: "16px" }}
           />
+          <DialogContentText
+            sx={{ display: "none" }}
+            className="show-when-printing"
+          >
+            {
+              "Make your own QR Code notification at https://tipster-prime.vercel.app/"
+            }
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handlePrint} className="hide-when-printing">
