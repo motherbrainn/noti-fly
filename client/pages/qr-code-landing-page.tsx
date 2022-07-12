@@ -1,4 +1,11 @@
-import { Button, TextField } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
 import Error from "next/error";
 import { useRouter } from "next/router";
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
@@ -91,8 +98,21 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
       )}
       {qrCodeActive === false && (
         <div>
-          QR Code is not active. Check your phone to opt in then refresh the
-          page.
+          <Dialog
+            open={true}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            PaperProps={{ sx: { backgroundColor: "aliceblue" } }}
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"QR Code is not active."}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Check your phone to opt in then refresh the page.
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
         </div>
       )}
     </div>
