@@ -1,10 +1,12 @@
+import { Button, TextField } from "@mui/material";
 import Error from "next/error";
 import { useRouter } from "next/router";
-import { SetStateAction, useEffect, useState } from "react";
+import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import {
   retrieveQrCodeRecord,
   sendNotification,
 } from "../service/httpRequests";
+import styles from "../styles/Home.module.css";
 
 interface QrCodeLandingPagePropsType {
   qrkey: string;
@@ -49,24 +51,48 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
     }
   }, [notificationData, props, props.qrkey]);
 
+  const handleMemoChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setMemoText(e.target.value);
+  };
+
   return (
-    <div>
+    <div className={styles.container}>
       {(props.errorCode || qrCodeNotFound) && <Error statusCode={404} />}
       {notificationData && qrCodeActive === true && (
-        <div>
-          <div>{notificationData}</div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <h1>{notificationData}</h1>
           {allowMemo && (
-            <textarea
+            <TextField
+              id="outlined-multiline-static"
+              label="Add custom notification details (optional)"
+              multiline
+              rows={4}
               value={memoText}
-              onChange={(e) => setMemoText(e.target.value)}
-            ></textarea>
+              onChange={handleMemoChange}
+              margin="normal"
+              sx={{ width: 400 }}
+            />
           )}
-          <button onClick={onClickHandler}>submit</button>
+          <div style={{ margin: "10px" }}>
+            <Button size="medium" variant="contained" onClick={onClickHandler}>
+              Send Notification
+            </Button>
+          </div>
         </div>
       )}
       {qrCodeActive === false && (
         <div>
-          QR Code is not active. Check your phone to activate and try again.
+          QR Code is not active. Check your phone to opt in then refresh the
+          page.
         </div>
       )}
     </div>
