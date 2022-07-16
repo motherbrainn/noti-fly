@@ -192,7 +192,7 @@ const Form = ({ setKey, setPrompt, setIsLoading }: FormPropsType) => {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: "1rem" }}>
       <Tooltip title={"Number that will be notified when QR Code is scanned."}>
         <Input
           maxLength="14"
@@ -259,19 +259,16 @@ const Form = ({ setKey, setPrompt, setIsLoading }: FormPropsType) => {
           "When checked, users will be able to include custom text message with notification."
         }
       >
-        <div style={{ width: "fit-content", margin: "auto" }}>
-          <FormControlLabel
-            style={{ alignSelf: "start" }}
-            control={
-              <Checkbox
-                checked={allowMemoInput}
-                onChange={allowMemoInputChangeHandler}
-                inputProps={{ id: "allow-memo" }}
-              />
-            }
-            label="Allow Notification Memo"
-          />
-        </div>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={allowMemoInput}
+              onChange={allowMemoInputChangeHandler}
+              inputProps={{ id: "allow-memo" }}
+            />
+          }
+          label="Allow Notification Memo"
+        />
       </Tooltip>
       <div style={{ width: "fit-content", margin: "auto" }}>
         <Button
@@ -279,8 +276,9 @@ const Form = ({ setKey, setPrompt, setIsLoading }: FormPropsType) => {
           disabled={!allowSumbit}
           variant="contained"
           onClick={submitHandler}
+          sx={{ marginBottom: "10px" }}
         >
-          add record
+          ADD RECORD
         </Button>
       </div>
     </div>
