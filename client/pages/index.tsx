@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Instructions from "../components/Instructions";
 import MainContainer from "../components/MainContainer";
 import styles from "../styles/Home.module.css";
 
@@ -11,11 +12,12 @@ const Home: any = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Tipster</title>
+        <title>NOTI-FLY</title>
         <meta name="description" content="Tipster App" />
       </Head>
       <div>
-        <h1>Tipster</h1>
+        <h1>NOTI-FLY</h1>
+        <Instructions />
         <MainContainer />
       </div>
     </div>
