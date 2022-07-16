@@ -5,6 +5,7 @@ import {
   Collapse,
   FormControlLabel,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import {
   ChangeEvent,
@@ -192,68 +193,86 @@ const Form = ({ setKey, setPrompt, setIsLoading }: FormPropsType) => {
 
   return (
     <div>
-      <Input
-        maxLength="14"
-        placeholder="Phone number to send notifications"
-        value={phoneNumberInput}
-        onChange={phoneNumberChangeHandler}
-        country="US"
-        className="phone-input"
-        style={{
-          borderRadius: "5px",
-          borderWidth: "thin",
-          height: "3.5rem",
-          borderColor: "rgb(169 178 183)",
-          borderStyle: "solid",
-        }}
-      />
+      <Tooltip title={"Number that will be notified when QR Code is scanned."}>
+        <Input
+          maxLength="14"
+          placeholder="Phone Number"
+          value={phoneNumberInput}
+          onChange={phoneNumberChangeHandler}
+          country="US"
+          className="phone-input"
+          style={{
+            borderRadius: "5px",
+            borderWidth: "thin",
+            height: "3.5rem",
+            borderColor: "rgb(169 178 183)",
+            borderStyle: "solid",
+          }}
+        />
+      </Tooltip>
       <Collapse in={validations.invalidPhoneNumber}>
         {invalidPhoneNumber}
       </Collapse>
-      <TextField
-        fullWidth
-        margin="normal"
-        id="qr-code-name"
-        label="Name for this notification record.. this is just for you"
-        value={notificationNameInput}
-        onChange={qrCodeNameChangeHandler}
-      />
+      <Tooltip title={"This is used to differentiate QR Codes."}>
+        <TextField
+          fullWidth
+          margin="normal"
+          id="qr-code-name"
+          label="QR Code Name"
+          value={notificationNameInput}
+          onChange={qrCodeNameChangeHandler}
+        />
+      </Tooltip>
       <Collapse in={validations.invalidName}>{invalidName}</Collapse>
-      <TextField
-        fullWidth
-        multiline
-        margin="normal"
-        id="qr-code-prompt"
-        label="What should users see when they scan your QR code?"
-        value={qrCodePromptInput}
-        onChange={qrCodePromptChangeHandler}
-      />
+      <Tooltip title={"The message shown when QR Code is scanned."}>
+        <TextField
+          fullWidth
+          multiline
+          margin="normal"
+          id="qr-code-prompt"
+          label="User Prompt"
+          value={qrCodePromptInput}
+          onChange={qrCodePromptChangeHandler}
+        />
+      </Tooltip>
       <Collapse in={validations.invalidPrompt}>{invalidPrompt}</Collapse>
-      <TextField
-        fullWidth
-        multiline
-        margin="normal"
-        id="qr-code-notification-content"
-        label="Notification message you will receive when a user scans your QR code"
-        value={qrCodeNotificationInput}
-        onChange={qrCodeNotificationChangeHandler}
-      />
+      <Tooltip
+        title={
+          "This message is sent to the phone number when QR Code is scanned."
+        }
+      >
+        <TextField
+          fullWidth
+          multiline
+          margin="normal"
+          id="qr-code-notification-content"
+          label="Notification Message"
+          value={qrCodeNotificationInput}
+          onChange={qrCodeNotificationChangeHandler}
+        />
+      </Tooltip>
       <Collapse in={validations.invalidNotification}>
         {invalidNotification}
       </Collapse>
-      <div style={{ width: "fit-content", margin: "auto" }}>
-        <FormControlLabel
-          style={{ alignSelf: "start" }}
-          control={
-            <Checkbox
-              checked={allowMemoInput}
-              onChange={allowMemoInputChangeHandler}
-              inputProps={{ id: "allow-memo" }}
-            />
-          }
-          label="Allow Memo"
-        />
-      </div>
+      <Tooltip
+        title={
+          "When checked, users will be able to include custom text message with notification."
+        }
+      >
+        <div style={{ width: "fit-content", margin: "auto" }}>
+          <FormControlLabel
+            style={{ alignSelf: "start" }}
+            control={
+              <Checkbox
+                checked={allowMemoInput}
+                onChange={allowMemoInputChangeHandler}
+                inputProps={{ id: "allow-memo" }}
+              />
+            }
+            label="Allow Notification Memo"
+          />
+        </div>
+      </Tooltip>
       <div style={{ width: "fit-content", margin: "auto" }}>
         <Button
           size="large"
