@@ -75,7 +75,7 @@ const MainContainer = () => {
             value={`${clientUrl}/qr-code-landing-page?qrkey=${qrCodeKey}`}
             bgColor={"#1f1f1f"}
             fgColor={"white"}
-            size={256}
+            size={200}
             style={{ margin: "16px" }}
           />
           <DialogContentText
