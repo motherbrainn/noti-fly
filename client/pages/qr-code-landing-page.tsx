@@ -10,7 +10,7 @@ import Error from "next/error";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
-import { CssTextField } from "../common";
+import { SubmitButton, CssTextField } from "../common";
 import {
   retrieveQrCodeRecord,
   sendNotification,
@@ -102,9 +102,13 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
             </Tooltip>
           )}
           <div style={{ margin: "10px" }}>
-            <Button size="medium" variant="contained" onClick={onClickHandler}>
+            <SubmitButton
+              size="medium"
+              variant="contained"
+              onClick={onClickHandler}
+            >
               Send Notification
-            </Button>
+            </SubmitButton>
           </div>
         </div>
       )}

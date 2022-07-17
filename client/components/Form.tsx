@@ -23,7 +23,7 @@ import "react-phone-number-input/style.css";
 import Input from "react-phone-number-input/input";
 import { E164Number } from "libphonenumber-js/core";
 import DOMPurify from "dompurify";
-import { CssTextField } from "../common";
+import { SubmitButton, CssTextField } from "../common";
 
 const sanitizer = DOMPurify.sanitize;
 
@@ -268,7 +268,7 @@ const Form = ({ setKey, setPrompt, setIsLoading }: FormPropsType) => {
         />
       </Tooltip>
       <div style={{ width: "fit-content", margin: "auto" }}>
-        <Button
+        <SubmitButton
           size="large"
           disabled={!allowSumbit}
           variant="contained"
@@ -276,7 +276,7 @@ const Form = ({ setKey, setPrompt, setIsLoading }: FormPropsType) => {
           sx={{ marginBottom: "10px" }}
         >
           ADD RECORD
-        </Button>
+        </SubmitButton>
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import {
   Backdrop,
-  Button,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -10,6 +9,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import QRCode from "react-qr-code";
+import { ModalButton } from "../common";
 import Form from "./Form";
 
 const env = process.env.NODE_ENV;
@@ -86,12 +86,12 @@ const MainContainer = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handlePrint} className="hide-when-printing">
+          <ModalButton onClick={handlePrint} className="hide-when-printing">
             Print Notification QR Code
-          </Button>
-          <Button onClick={handleClose} className="hide-when-printing">
+          </ModalButton>
+          <ModalButton onClick={handleClose} className="hide-when-printing">
             Close
-          </Button>
+          </ModalButton>
         </DialogActions>
       </Dialog>
       <Backdrop
