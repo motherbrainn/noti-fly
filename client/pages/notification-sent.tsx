@@ -18,7 +18,7 @@ const NotificationSent = () => {
         open={true}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        PaperProps={{ sx: { backgroundColor: "aliceblue" } }}
+        PaperProps={{ sx: { backgroundColor: "#1F1F1F" } }}
       >
         <DialogTitle id="alert-dialog-title" sx={{ margin: "auto" }}>
           {"Notification successfully sent"}
