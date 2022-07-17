@@ -273,7 +273,7 @@ const Form = ({ setKey, setPrompt, setIsLoading }: FormPropsType) => {
           disabled={!allowSumbit}
           variant="contained"
           onClick={submitHandler}
-          sx={{ marginBottom: "10px" }}
+          sx={{ marginBottom: "10px", marginTop: "10px" }}
         >
           ADD RECORD
         </SubmitButton>
