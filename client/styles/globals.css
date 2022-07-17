@@ -8,10 +8,10 @@ button {
   color: #8d8a90;
   font-family: "Press Start 2P", cursive;
 }
-/* input {
-  text-indent: 10px;
-  color: "#AC6AFB";
-} */
+
+h1 {
+  color: #03dac5;
+}
 
 a {
   color: inherit;
