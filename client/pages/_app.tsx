@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { createTheme, ThemeProvider } from "@mui/material";
 
 const theme = createTheme({
+  //this themes all material ui component font (does not include phone number)
   typography: {
     fontFamily: "Press Start 2P cursive",
   },

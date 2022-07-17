@@ -11,7 +11,7 @@ export const serverAddress =
 
 const Home: any = () => {
   return (
-    <div className={styles.container}>
+    <div className="container">
       <Head>
         <title>NOTI-FLY</title>
         <meta name="description" content="Tipster App" />

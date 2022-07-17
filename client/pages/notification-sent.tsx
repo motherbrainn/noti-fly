@@ -10,7 +10,7 @@ const handleClick = () => {
 
 const NotificationSent = () => {
   return (
-    <div className={styles.container}>
+    <div className="container">
       <Head>
         <title>Tipster</title>
         <meta name="description" content="Tipster App" />
