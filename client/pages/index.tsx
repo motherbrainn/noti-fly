@@ -20,6 +20,16 @@ const theme = createTheme({
       secondary: "#8D8A90",
     },
   },
+  components: {
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          // disable hover behavior for divider
+          pointerEvents: "none",
+        },
+      },
+    },
+  },
 });
 
 const env = process.env.NODE_ENV;
