@@ -4,12 +4,13 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField,
+  Tooltip,
 } from "@mui/material";
 import Error from "next/error";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
+import { CssTextField } from "../common";
 import {
   retrieveQrCodeRecord,
   sendNotification,
@@ -83,16 +84,22 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
         >
           <h1>{notificationData}</h1>
           {allowMemo && (
-            <TextField
-              id="outlined-multiline-static"
-              label="Add custom notification details (optional)"
-              multiline
-              rows={4}
-              value={memoText}
-              onChange={handleMemoChange}
-              margin="normal"
-              sx={{ width: 400 }}
-            />
+            <Tooltip
+              title={
+                "Include a memo to send to the admin along with this notification (optional)"
+              }
+            >
+              <CssTextField
+                id="outlined-multiline-static"
+                label="Memo (optional)"
+                multiline
+                rows={4}
+                value={memoText}
+                onChange={handleMemoChange}
+                margin="normal"
+                sx={{ width: 400 }}
+              />
+            </Tooltip>
           )}
           <div style={{ margin: "10px" }}>
             <Button size="medium" variant="contained" onClick={onClickHandler}>

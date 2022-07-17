@@ -4,8 +4,6 @@ import {
   Checkbox,
   Collapse,
   FormControlLabel,
-  styled,
-  TextField,
   Tooltip,
 } from "@mui/material";
 import {
@@ -25,6 +23,7 @@ import "react-phone-number-input/style.css";
 import Input from "react-phone-number-input/input";
 import { E164Number } from "libphonenumber-js/core";
 import DOMPurify from "dompurify";
+import { CssTextField } from "../common";
 
 const sanitizer = DOMPurify.sanitize;
 
@@ -33,26 +32,6 @@ interface FormPropsType {
   setPrompt: Dispatch<SetStateAction<string>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
-
-const CssTextField = styled(TextField)({
-  // "& label.Mui-focused": {
-  //   color: "green",
-  // },
-  // "& .MuiInput-underline:after": {
-  //   borderBottomColor: "green",
-  // },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "#8D8A90",
-    },
-    // "&:hover fieldset": {
-    //   borderColor: "#03DAC5",
-    // },
-    // "&.Mui-focused fieldset": {
-    //   borderColor: "#03DAC5",
-    // },
-  },
-});
 
 const Form = ({ setKey, setPrompt, setIsLoading }: FormPropsType) => {
   const [phoneNumberInput, setPhoneNumberInput] = useState<
