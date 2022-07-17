@@ -42,14 +42,14 @@ const MainContainer = () => {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        PaperProps={{ sx: { backgroundColor: "aliceblue" } }}
+        PaperProps={{ sx: { backgroundColor: "#1f1f1f" } }}
       >
         <DialogTitle
           id="alert-dialog-title"
           className="hide-when-printing"
           sx={{ textAlign: "center", width: "fit-content" }}
         >
-          YOUR QR CODE IS NOT ACTIVE UNTIL YOU CONFIRM VIA TEXT.. CHECK YOUR
+          YOUR QR CODE IS NOT ACTIVE UNTIL YOU ACTIVATE VIA TEXT.. CHECK YOUR
           PHONE
         </DialogTitle>
         <DialogContent
@@ -73,8 +73,8 @@ const MainContainer = () => {
           <QRCode
             title="qr code"
             value={`${clientUrl}/qr-code-landing-page?qrkey=${qrCodeKey}`}
-            bgColor={"aliceblue"}
-            fgColor={"#2FA8FF"}
+            bgColor={"#1f1f1f"}
+            fgColor={"white"}
             size={256}
             style={{ margin: "16px" }}
           />
@@ -82,9 +82,7 @@ const MainContainer = () => {
             sx={{ display: "none" }}
             className="show-when-printing"
           >
-            {
-              "Make your own QR Code notification at https://tipster-prime.vercel.app/"
-            }
+            {"https://tipster-prime.vercel.app/"}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
