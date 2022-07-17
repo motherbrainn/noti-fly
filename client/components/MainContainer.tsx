@@ -76,7 +76,7 @@ const MainContainer = () => {
             bgColor={"#1f1f1f"}
             fgColor={"white"}
             size={200}
-            style={{ margin: "16px" }}
+            style={{ marginTop: "16px" }}
           />
           <DialogContentText
             sx={{ display: "none" }}
