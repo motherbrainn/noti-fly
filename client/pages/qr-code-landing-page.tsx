@@ -112,7 +112,7 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
           </div>
         </div>
       )}
-      {qrCodeActive === false && (
+      {qrCodeActive === false && qrCodeNotFound === undefined && (
         <div>
           <Dialog
             open={true}
