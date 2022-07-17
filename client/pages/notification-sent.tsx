@@ -1,6 +1,7 @@
-import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import Head from "next/head";
 import router from "next/router";
+import { ModalButton } from "../common";
 import styles from "../styles/Home.module.css";
 
 const handleClick = () => {
@@ -24,9 +25,9 @@ const NotificationSent = () => {
           {"Notification successfully sent"}
         </DialogTitle>
         <DialogContent>
-          <Button onClick={handleClick}>
+          <ModalButton onClick={handleClick} autoFocus>
             Create your own notification QR Code
-          </Button>
+          </ModalButton>
         </DialogContent>
       </Dialog>
     </div>

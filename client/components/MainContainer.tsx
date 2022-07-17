@@ -86,7 +86,11 @@ const MainContainer = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <ModalButton onClick={handlePrint} className="hide-when-printing">
+          <ModalButton
+            onClick={handlePrint}
+            className="hide-when-printing"
+            autoFocus
+          >
             Print Notification QR Code
           </ModalButton>
           <ModalButton onClick={handleClose} className="hide-when-printing">
