@@ -10,7 +10,7 @@ const Instructions = () => {
     <div>
       <h3>CREATE A QR CODE THAT WILL NOTIFY YOUR PHONE WHEN SCANNED</h3>
       <p>IT&apos;S AS EASY AS..</p>
-      <List sx={{ backgroundColor: "#EFFF6E", borderRadius: "10px" }}>
+      <List sx={{ backgroundColor: "#332F37", borderRadius: "10px" }}>
         <ListItem divider>
           <CreateIcon sx={listItemStyle} /> FILL OUT FORM TO CREATE QR CODE
         </ListItem>

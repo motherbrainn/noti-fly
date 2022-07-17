@@ -6,7 +6,19 @@ import styles from "../styles/Home.module.css";
 
 const theme = createTheme({
   typography: {
-    fontFamily: ["Press Start 2P cursive"].join(","),
+    fontFamily: "Press Start 2P cursive",
+  },
+  palette: {
+    //focused cell color
+    primary: {
+      main: "#AC6AFB",
+    },
+    text: {
+      //input text color
+      primary: "#AC6AFB",
+      //input placeholder color
+      secondary: "#8D8A90",
+    },
   },
 });
 

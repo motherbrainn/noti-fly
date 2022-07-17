@@ -4,6 +4,7 @@ import {
   Checkbox,
   Collapse,
   FormControlLabel,
+  styled,
   TextField,
   Tooltip,
 } from "@mui/material";
@@ -32,6 +33,26 @@ interface FormPropsType {
   setPrompt: Dispatch<SetStateAction<string>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
+
+const CssTextField = styled(TextField)({
+  // "& label.Mui-focused": {
+  //   color: "green",
+  // },
+  // "& .MuiInput-underline:after": {
+  //   borderBottomColor: "green",
+  // },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#8D8A90",
+    },
+    // "&:hover fieldset": {
+    //   borderColor: "#03DAC5",
+    // },
+    // "&.Mui-focused fieldset": {
+    //   borderColor: "#03DAC5",
+    // },
+  },
+});
 
 const Form = ({ setKey, setPrompt, setIsLoading }: FormPropsType) => {
   const [phoneNumberInput, setPhoneNumberInput] = useState<
@@ -201,20 +222,15 @@ const Form = ({ setKey, setPrompt, setIsLoading }: FormPropsType) => {
           onChange={phoneNumberChangeHandler}
           country="US"
           className="phone-input"
-          style={{
-            borderRadius: "5px",
-            borderWidth: "thin",
-            height: "3.5rem",
-            borderColor: "rgb(169 178 183)",
-            borderStyle: "solid",
-          }}
+          autoComplete="off"
         />
       </Tooltip>
       <Collapse in={validations.invalidPhoneNumber}>
         {invalidPhoneNumber}
       </Collapse>
       <Tooltip title={"This is used to differentiate QR Codes."}>
-        <TextField
+        <CssTextField
+          autoComplete="off"
           fullWidth
           margin="normal"
           id="qr-code-name"
@@ -225,7 +241,8 @@ const Form = ({ setKey, setPrompt, setIsLoading }: FormPropsType) => {
       </Tooltip>
       <Collapse in={validations.invalidName}>{invalidName}</Collapse>
       <Tooltip title={"The message shown when QR Code is scanned."}>
-        <TextField
+        <CssTextField
+          autoComplete="off"
           fullWidth
           multiline
           margin="normal"
@@ -241,7 +258,8 @@ const Form = ({ setKey, setPrompt, setIsLoading }: FormPropsType) => {
           "This message is sent to the phone number when QR Code is scanned."
         }
       >
-        <TextField
+        <CssTextField
+          autoComplete="off"
           fullWidth
           multiline
           margin="normal"
