@@ -118,14 +118,14 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
             open={true}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
-            PaperProps={{ sx: { backgroundColor: "aliceblue" } }}
+            PaperProps={{ sx: { backgroundColor: "#1f1f1f" } }}
           >
             <DialogTitle id="alert-dialog-title">
               {"QR Code is not active."}
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Check your phone to opt in then refresh the page.
+                Check your phone to activate QR Code then refresh this page.
               </DialogContentText>
             </DialogContent>
           </Dialog>
