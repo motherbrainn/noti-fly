@@ -16,7 +16,8 @@ router.post("/sms", async (req, res) => {
       fromPhoneNumber
     );
     if (numberOfActivatedRecords > 0) {
-      message = "Your QR Code is activated.";
+      message =
+        "Your QR Code is activated! When a user scans your code you will be notified via text.";
     }
   }
 

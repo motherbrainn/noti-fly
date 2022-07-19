@@ -96,7 +96,7 @@ const activateQrRecordForPhoneNumber = async (phoneNumber) => {
  */
 const sendConfirmationMessage = async (phoneNumber) => {
   const confirmationMessage =
-    "Reply with 'y' to opt in to text notifications for this QR code. Your QR code will not work until you opt in. Reply with 'stop' to unsubscribe";
+    "Reply with 'y' to activate this QR code and start recieving notication messages. Your QR code will not work until it is activated. Reply with 'stop' to unsubscribe from all notifications";
   const response = await sendTextMessage(phoneNumber, confirmationMessage);
   return response;
 };
