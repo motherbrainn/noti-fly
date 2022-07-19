@@ -14,7 +14,7 @@ import {
   retrieveQrCodeRecord,
   sendNotification,
 } from "../service/httpRequests";
-import styles from "../styles/Home.module.css";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface QrCodeLandingPagePropsType {
   qrkey: string;
@@ -25,6 +25,10 @@ interface InitialPropsType {
 }
 
 const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
+  //when mobile is true, min width is phone width
+  const mobile = useMediaQuery("(max-device-width: 480px)");
+  const inputWidth = mobile ? "width: 400" : "width: 200";
+
   const router = useRouter();
 
   const [qrKey, setQrKey] = useState("");
@@ -96,7 +100,7 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
                 value={memoText}
                 onChange={handleMemoChange}
                 margin="normal"
-                sx={{ width: 400 }}
+                sx={{ inputWidth }}
               />
             </Tooltip>
           )}

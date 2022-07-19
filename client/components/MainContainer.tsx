@@ -11,6 +11,7 @@ import { useState } from "react";
 import QRCode from "react-qr-code";
 import { ModalButton } from "../common";
 import Form from "./Form";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const env = process.env.NODE_ENV;
 const PROD_CLIENT_URL = process.env.NEXT_PUBLIC_PROD_CLIENT_URL;
@@ -18,6 +19,9 @@ const PROD_CLIENT_URL = process.env.NEXT_PUBLIC_PROD_CLIENT_URL;
 const clientUrl = env === "production" ? PROD_CLIENT_URL : "localhost:3000";
 
 const MainContainer = () => {
+  const mobile = useMediaQuery("(max-device-width: 480px)");
+  const qrCodeSize = mobile ? 140 : 256;
+
   const [qrCodeKey, setQrCodeKey] = useState("");
   const [qrCodePrompt, setQrCodePrompt] = useState("");
   const [loading, setIsLoading] = useState(false);
@@ -63,7 +67,7 @@ const MainContainer = () => {
           <DialogContentText
             id="alert-dialog-description"
             sx={{
-              wordBreak: "break-all",
+              wordBreak: "break-word",
               whiteSpace: "normal",
               fontStyle: "italic",
             }}
@@ -75,11 +79,11 @@ const MainContainer = () => {
             value={`${clientUrl}/qr-code-landing-page?qrkey=${qrCodeKey}`}
             bgColor={"#1f1f1f"}
             fgColor={"white"}
-            size={200}
+            size={qrCodeSize}
             style={{ marginTop: "16px" }}
           />
           <DialogContentText
-            sx={{ display: "none" }}
+            sx={{ display: "none", marginTop: "16px" }}
             className="show-when-printing"
           >
             {"https://tipster-prime.vercel.app/"}
