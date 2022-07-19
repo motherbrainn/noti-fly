@@ -51,7 +51,11 @@ const MainContainer = () => {
         <DialogTitle
           id="alert-dialog-title"
           className="hide-when-printing"
-          sx={{ textAlign: "center", width: "fit-content" }}
+          sx={{
+            textAlign: "center",
+            width: "fit-content",
+            ...(mobile && { fontSize: "16px" }),
+          }}
         >
           YOUR QR CODE IS NOT ACTIVE UNTIL YOU ACTIVATE VIA TEXT.. CHECK YOUR
           PHONE
@@ -89,15 +93,20 @@ const MainContainer = () => {
             {"https://tipster-prime.vercel.app/"}
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ ...(mobile && { marginRight: "8px" }) }}>
           <ModalButton
             onClick={handlePrint}
             className="hide-when-printing"
             autoFocus
+            sx={{ ...(mobile && { fontSize: "12px" }) }}
           >
             Print Notification QR Code
           </ModalButton>
-          <ModalButton onClick={handleClose} className="hide-when-printing">
+          <ModalButton
+            onClick={handleClose}
+            className="hide-when-printing"
+            sx={{ ...(mobile && { fontSize: "12px" }) }}
+          >
             Close
           </ModalButton>
         </DialogActions>
