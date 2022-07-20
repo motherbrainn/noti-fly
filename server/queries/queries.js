@@ -125,6 +125,20 @@ const sendNotificationMessage = async (key, message) => {
   return [sendNotificationResponse, allow_memo ? sendMemoResponse : ""];
 };
 
+/**
+ *
+ * @param {*} phoneNumber
+ * @returns
+ */
+const qrCodesForPhoneNumber = async (phoneNumber) => {
+  let res;
+  res = await pool.query(
+    "SELECT * FROM user_data WHERE phone_number=$1 AND active=$2",
+    [phoneNumber, true]
+  );
+  return res.rows;
+};
+
 module.exports = {
   sendConfirmationMessage,
   getQrRecords,
@@ -132,4 +146,5 @@ module.exports = {
   deleteInactiveQrRecords,
   activateQrRecordForPhoneNumber,
   sendNotificationMessage,
+  qrCodesForPhoneNumber,
 };

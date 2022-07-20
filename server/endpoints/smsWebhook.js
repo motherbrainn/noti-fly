@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
 
-const { activateQrRecordForPhoneNumber } = require("../queries/queries");
+const {
+  activateQrRecordForPhoneNumber,
+  qrCodesForPhoneNumber,
+} = require("../queries/queries");
 const { sendTextMessage } = require("../utilities");
 
 router.post("/sms", async (req, res) => {
@@ -18,6 +21,22 @@ router.post("/sms", async (req, res) => {
     if (numberOfActivatedRecords > 0) {
       message =
         "Your QR Code is activated! When a user scans your code you will be notified via text.";
+    }
+  }
+
+  if (messageBody === "LIST") {
+    const qrCodeList = await qrCodesForPhoneNumber(fromPhoneNumber);
+
+    const qrCodeNameAndIndex = qrCodeList.map(
+      (e, i) => `${i + 1}: ${e.notification_id}`
+    );
+
+    //return ids and names as strings seperated by new lines
+    if (qrCodeNameAndIndex.length > 0) {
+      message = `Active QR Codes: ${"\n"} ${qrCodeNameAndIndex.join("\n")}`;
+    } else {
+      message =
+        "This phone number does not have any active QR Codes. Go ahead and create one!";
     }
   }
 
