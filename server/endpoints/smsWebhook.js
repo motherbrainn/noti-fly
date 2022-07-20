@@ -57,7 +57,6 @@ router.post("/sms", async (req, res) => {
       fromPhoneNumber,
       qrCodeId
     );
-    console.log(removedRowCount);
     if (removedRowCount === 1) {
       message = `QR Code successfully removed.`;
     } else {
