@@ -139,6 +139,22 @@ const qrCodesForPhoneNumber = async (phoneNumber) => {
   return res.rows;
 };
 
+const deleteQrCodeByIndex = async (phoneNumber, index) => {
+  //this could be done with reduce instead
+  const qrCodeToRemove = (await qrCodesForPhoneNumber(phoneNumber))
+    .map((e) => e.key)
+    .filter((e, i) => i === index - 1);
+
+  if (qrCodeToRemove.length > 0) {
+    let res;
+    res = await pool.query("DELETE FROM user_data WHERE key=$1", [
+      qrCodeToRemove[0],
+    ]);
+    //this will return 1 if delete is successful
+    return res.rowCount;
+  }
+};
+
 module.exports = {
   sendConfirmationMessage,
   getQrRecords,
@@ -147,4 +163,5 @@ module.exports = {
   activateQrRecordForPhoneNumber,
   sendNotificationMessage,
   qrCodesForPhoneNumber,
+  deleteQrCodeByIndex,
 };

@@ -5,16 +5,19 @@ const MessagingResponse = require("twilio").twiml.MessagingResponse;
 const {
   activateQrRecordForPhoneNumber,
   qrCodesForPhoneNumber,
+  deleteQrCodeByIndex,
 } = require("../queries/queries");
 const { sendTextMessage } = require("../utilities");
 
 router.post("/sms", async (req, res) => {
   const messageBody = req.body.Body.toUpperCase();
+  const messageCommand = messageBody.split(/\s(.+)/)[0];
+  const qrCodeId = messageBody.split(/\s(.+)/)[1];
   const fromPhoneNumber = req.body.From;
   const twiml = new MessagingResponse();
   let message = "";
 
-  if (messageBody === "Y") {
+  if (messageCommand === "Y") {
     const numberOfActivatedRecords = await activateQrRecordForPhoneNumber(
       fromPhoneNumber
     );
@@ -24,7 +27,7 @@ router.post("/sms", async (req, res) => {
     }
   }
 
-  if (messageBody === "LIST") {
+  if (messageCommand === "LIST") {
     const qrCodeList = await qrCodesForPhoneNumber(fromPhoneNumber);
 
     const qrCodeNameAndIndex = qrCodeList.map(
@@ -40,7 +43,7 @@ router.post("/sms", async (req, res) => {
     }
   }
 
-  if (messageBody === "QRHELP") {
+  if (messageCommand === "QRHELP") {
     const commands = [
       "list: returns a list of your active QR Codes",
       "remove<id>: remove a QR Code by id number from list. Ex: remove 1",
@@ -49,6 +52,18 @@ router.post("/sms", async (req, res) => {
     message = `Commands: ${"\r\n"} ${commands.join("\r\n")} `;
   }
 
+  if (messageCommand === "REMOVE" && qrCodeId !== undefined) {
+    const removedRowCount = await deleteQrCodeByIndex(
+      fromPhoneNumber,
+      qrCodeId
+    );
+    console.log(removedRowCount);
+    if (removedRowCount === 1) {
+      message = `QR Code successfully removed.`;
+    } else {
+      message = `Failed to remove QR Code, please check syntax and try again. Command should look like: remove <number>`;
+    }
+  }
   if (message.length > 0) {
     sendTextMessage(fromPhoneNumber, message);
   }
