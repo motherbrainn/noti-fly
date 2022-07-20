@@ -40,6 +40,15 @@ router.post("/sms", async (req, res) => {
     }
   }
 
+  if (messageBody === "QRHELP") {
+    const commands = [
+      "list: returns a list of your active QR Codes",
+      "remove<id>: remove a QR Code by id number from list. Ex: remove 1",
+      "qrcode<id>: retrieve QR Code by id number from list. Ex: qrcode 1",
+    ];
+    message = `Commands: ${"\r\n"} ${commands.join("\r\n")} `;
+  }
+
   if (message.length > 0) {
     sendTextMessage(fromPhoneNumber, message);
   }
