@@ -22,7 +22,8 @@ const Instructions = () => {
         <Divider />
         <ListItem>
           <QrCodeIcon sx={listItemStyle} />
-          POST/PASTE/PIN YOUR QR CODE WHEREVER YOU USERS TO BE ABLE TO SCAN IT!
+          PRINT QR CODE AND TAPE IT UP WHERE YOU WANT USERS TO BE ABLE TO SCAN
+          IT!
         </ListItem>
         <Divider />
       </List>

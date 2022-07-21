@@ -1,11 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
+const dotenv = require("dotenv");
+dotenv.config();
+
+const PROD_CLIENT_URL = process.env.PROD_CLIENT_URL;
 
 const {
   activateQrRecordForPhoneNumber,
   qrCodesForPhoneNumber,
   deleteQrCodeByIndex,
+  retrieveQrCodeKey,
 } = require("../queries/queries");
 const { sendTextMessage } = require("../utilities");
 
@@ -45,11 +50,11 @@ router.post("/sms", async (req, res) => {
 
   if (messageCommand === "QRHELP") {
     const commands = [
-      "list: returns a list of your active QR Codes",
-      "remove<id>: remove a QR Code by id number from list. Ex: remove 1",
-      "qrcode<id>: retrieve QR Code by id number from list. Ex: qrcode 1",
+      "LIST: returns a list of your active QR Codes.",
+      "REMOVE<id>: remove a QR Code by id number from list. Ex: REMOVE 1.",
+      "QR<id>: retrieve a link to re-print a QR Code by id number from list. Ex: QR 1.",
     ];
-    message = `Commands: ${"\r\n"} ${commands.join("\r\n")} `;
+    message = `Reply with these commands: ${"\r\n"} ${commands.join("\r\n")} `;
   }
 
   if (messageCommand === "REMOVE" && qrCodeId !== undefined) {
@@ -63,6 +68,12 @@ router.post("/sms", async (req, res) => {
       message = `Failed to remove QR Code, please check syntax and try again. Command should look like: remove <number>`;
     }
   }
+
+  if (messageCommand === "QR" && qrCodeId !== undefined) {
+    const qrCodeKey = await retrieveQrCodeKey(fromPhoneNumber, qrCodeId);
+    message = `Click here to re-print your QR Code: ${PROD_CLIENT_URL}/qr-code?qrkey=${qrCodeKey}`;
+  }
+
   if (message.length > 0) {
     sendTextMessage(fromPhoneNumber, message);
   }

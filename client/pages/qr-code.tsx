@@ -132,9 +132,6 @@ const QrCode = (props: QrCodeLandingPagePropsType) => {
             aria-describedby="alert-dialog-description"
             PaperProps={{ sx: { backgroundColor: "#1f1f1f" } }}
           >
-            <DialogTitle id="alert-dialog-title">
-              {"Invalid QR Code"}
-            </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
                 Invalid QR Code
