@@ -12,11 +12,7 @@ import QRCode from "react-qr-code";
 import { ModalButton } from "../common";
 import Form from "./Form";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
-const env = process.env.NODE_ENV;
-const PROD_CLIENT_URL = process.env.NEXT_PUBLIC_PROD_CLIENT_URL;
-
-const clientUrl = env === "production" ? PROD_CLIENT_URL : "localhost:3000";
+import { clientUrl } from "../utilities";
 
 const MainContainer = () => {
   const mobile = useMediaQuery("(max-device-width: 480px)");
