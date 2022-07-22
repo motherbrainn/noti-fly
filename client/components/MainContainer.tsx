@@ -86,7 +86,7 @@ const MainContainer = () => {
             sx={{ display: "none", marginTop: "16px" }}
             className="show-when-printing"
           >
-            {"https://tipster-prime.vercel.app/"}
+            {"https://noti-fly.vercel.app/"}
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{ ...(mobile && { marginRight: "8px" }) }}>

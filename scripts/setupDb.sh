@@ -2,9 +2,9 @@
 
 #set up postgres database
 set -e
-DB_USER=${1:-tipster_dev_user}
+DB_USER=${1:-noti_fly_dev_user}
 DB_USER_PASS=${2:-password}
-DB_NAME=${3:-tipster_development}
+DB_NAME=${3:-noti_fly_development}
 
 psql postgres <<EOF
 CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_USER_PASS';

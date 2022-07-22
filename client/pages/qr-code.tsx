@@ -63,8 +63,8 @@ const QrCode = (props: QrCodeLandingPagePropsType) => {
   return (
     <div className="container">
       <Head>
-        <title>Tipster</title>
-        <meta name="description" content="Tipster App" />
+        <title>Noti-Fly</title>
+        <meta name="description" content="Noti-Fly App" />
       </Head>
       {!loading && fetchStatus === 200 && qrCodeActive === true && (
         <div>
@@ -118,7 +118,7 @@ const QrCode = (props: QrCodeLandingPagePropsType) => {
                 sx={{ display: "none", marginTop: "16px" }}
                 className="show-when-printing"
               >
-                {"https://tipster-prime.vercel.app/"}
+                {"https://noti-fly.vercel.app/"}
               </DialogContentText>
             </DialogContent>
           </Dialog>

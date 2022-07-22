@@ -1,13 +1,13 @@
-# tipster
+# noti-fly
 
 Local Install  
 You will need a local PostgreSQL server instance running to use this locally.
 
-```$ brew install postgresql``` to install postgres.  
-```$ brew services start postgresql``` to start up postgres.  
-```$ ./install.sh``` to install dependencies and set up local development database with default settings.  
+`$ brew install postgresql` to install postgres.  
+`$ brew services start postgresql` to start up postgres.  
+`$ ./install.sh` to install dependencies and set up local development database with default settings.  
 If you want to customize your database connection use optional arguments:  
-```$ ./install.sh <dbUserName> <dbPassword> <dbName>```
+`$ ./install.sh <dbUserName> <dbPassword> <dbName>`
 
 Twilio  
 Set up a free trial twilio account and create a phone number.
@@ -20,5 +20,5 @@ Once ngrok is running copy the address http://localhost:4000 is being forwarded 
 ngrok doesnt like to run via concurrently, not sure why, I just run it in it's own tab.
 
 Development  
-```$ yarn run devStart```  
-```$ yarn run ngrok```
+`$ yarn run devStart`  
+`$ yarn run ngrok`

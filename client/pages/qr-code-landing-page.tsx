@@ -72,8 +72,8 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
   return (
     <div className="container">
       <Head>
-        <title>Tipster</title>
-        <meta name="description" content="Tipster App" />
+        <title>Noti-Fly</title>
+        <meta name="description" content="Noti-Fly App" />
       </Head>
       {(props.errorCode || qrCodeNotFound) && <Error statusCode={404} />}
       {notificationData && qrCodeActive === true && (

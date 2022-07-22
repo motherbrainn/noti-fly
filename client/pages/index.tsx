@@ -14,7 +14,7 @@ const Home: any = () => {
     <div className="container">
       <Head>
         <title>NOTI-FLY</title>
-        <meta name="description" content="Tipster App" />
+        <meta name="description" content="Noti-Fly App" />
       </Head>
       <div>
         <h1>NOTI-FLY</h1>

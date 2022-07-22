@@ -2,7 +2,7 @@
 
 #install dependencies
 yarn add -D concurrently
-yarn run install-tipster
+yarn run install-noti-fly
 
 #set up local env files
 scripts/setupClientEnv.sh
