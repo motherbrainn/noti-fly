@@ -95,7 +95,7 @@ const activateQrRecordForPhoneNumber = async (phoneNumber) => {
  * @returns 'ok' string if successful
  */
 const sendConfirmationMessage = async (phoneNumber) => {
-  const confirmationMessage = `Reply with "Y" to activate this QR code and start receiving notication messages. Your QR code will not work until it is activated. ${"\n"}Reply with "QRHELP" for options. ${"\n"}Reply with "STOP" at any time to unsubscribe from all notifications`;
+  const confirmationMessage = `Welcome to Noti-Fly! Reply with "Y" to activate this QR code and start receiving notication messages. Your QR code will not work until it is activated. ${"\n"}Reply with "QRHELP" for options. ${"\n"}Reply with "STOP" at any time to unsubscribe from all notifications.`;
   const response = await sendTextMessage(phoneNumber, confirmationMessage);
   return response;
 };
