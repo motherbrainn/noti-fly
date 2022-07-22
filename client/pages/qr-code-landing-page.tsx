@@ -85,7 +85,9 @@ const QrCodeLandingPage = (props: QrCodeLandingPagePropsType) => {
             textAlign: "center",
           }}
         >
-          <h1>{notificationData}</h1>
+          <h1 style={{ ...(mobile && { fontSize: "26px" }) }}>
+            {notificationData}
+          </h1>
           {allowMemo && (
             <Tooltip
               title={
