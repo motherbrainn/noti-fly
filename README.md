@@ -16,7 +16,10 @@ Set up a free trial twilio account and create a phone number. Add your Twilio ph
 **ngrok**  
 ngrok is required to use the Twilio webhook locally. Follow instructions here to set it up: https://ngrok.com/download
 
-Once ngrok is running copy the address http://localhost:4000 is being forwarded to and paste it into Twilio as your SMS handler as HTTP POST. (example: https://f409-611-972-206-84.ngrok.io/sms)
+Once ngrok is running copy the address http://localhost:4000 is being forwarded to and paste it into Twilio as your SMS handler for HTTP POST. (example: https://f409-611-972-206-84.ngrok.io/sms)
+
+<img src="/twilio-sms-config.png" width=40% height=40%>
+
 
 
 **Development**
