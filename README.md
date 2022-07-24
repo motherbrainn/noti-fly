@@ -27,5 +27,5 @@ Once ngrok is running copy the address http://localhost:4000 is being forwarded 
 `$ yarn run ngrok` (ngrok doesnt like to run via concurrently, not sure why, I just run it in it's own tab.)
 
 **Tech Stuff**  
-Client is React using Next.js, server is Express, DB is Postgres.  
+Client is React using Next.js, server is Express, DB is Postgres.  Client and server communicate via GraphQL. I'm mostly using MUI components.  
 In prod client is deployed with Vercel, server is hosted by Heroku and DB is Heroku Postgres.
