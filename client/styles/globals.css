@@ -41,6 +41,10 @@ a {
   border-style: solid;
 }
 
+.phone-input::placeholder {
+  color: #8d8a90;
+}
+
 .phone-input:focus,
 :hover {
   border-color: #ac6afb;
