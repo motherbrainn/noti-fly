@@ -77,16 +77,34 @@ const MainContainer = () => {
           <QRCode
             title="qr code"
             value={`${clientUrl}/qr-code-landing-page?qrkey=${qrCodeKey}`}
-            bgColor={"#1f1f1f"}
-            fgColor={"white"}
+            bgColor={"white"}
+            fgColor={"black"}
             size={qrCodeSize}
             style={{ marginTop: "16px" }}
           />
           <DialogContentText
-            sx={{ display: "none", marginTop: "16px" }}
+            sx={{
+              display: "none",
+              marginTop: "16px",
+            }}
             className="show-when-printing"
           >
-            {"https://noti-fly.vercel.app/"}
+            {
+              <p>
+                <p
+                  style={{
+                    fontSize: "0.8rem",
+                    marginTop: "36px",
+                    marginBottom: "18px",
+                  }}
+                >
+                  {"Create your own QR Code Notification at:"}
+                </p>
+                <p style={{ textDecoration: "underline" }}>
+                  {"https://noti-fly.vercel.app"}
+                </p>
+              </p>
+            }
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{ ...(mobile && { marginRight: "8px" }) }}>
