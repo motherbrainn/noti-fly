@@ -28,4 +28,4 @@ Once ngrok is running copy the address http://localhost:4000 is being forwarded 
 
 **Tech Stuff**  
 Client is React using Next.js, server is Express, DB is Postgres.  Client and server communicate via GraphQL. I'm mostly using MUI components.  
-In prod client is deployed with Vercel, server is hosted by Heroku and DB is Heroku Postgres.
+In prod client is deployed with Vercel, server is deployed as a docker image via ~~Heroku~~ Railway.app and DB is hosted via ~~Heroku Postgres~~ Railway.app.
