@@ -1,14 +1,15 @@
 # noti-fly
-Create a QR Code that will notify the provided phone number when scanned. Some basic QR code maintenance functionality can be accessed via text. 
+
+Create a QR Code that will notify the provided phone number when scanned. Some basic QR code maintenance functionality can be accessed via text.
 
 **Local Install**  
 You will need a local PostgreSQL server instance running to use this locally.
 
-1. `$ brew install postgresql` to install postgres.  
-2. `$ brew services start postgresql` to start up postgres.  
+1. `$ brew install postgresql` to install postgres.
+2. `$ brew services start postgresql` to start up postgres.
 3. `$ ./install.sh` to install dependencies and set up local development database with default settings and .env template files.  
-If you want to customize your database connection use optional arguments:  
-`$ ./install.sh <dbUserName> <dbPassword> <dbName>`
+   If you want to customize your database connection use optional arguments:  
+   `$ ./install.sh <dbUserName> <dbPassword> <dbName>`
 
 **Twilio**  
 Set up a free trial twilio account and create a phone number. Add your Twilio phone number, account SID and auth token to the .env file in /server.
@@ -20,12 +21,10 @@ Once ngrok is running copy the address http://localhost:4000 is being forwarded 
 
 <img src="/twilio-sms-config.png" width=40% height=40%>
 
-
-
 **Development**
 `$ yarn run devStart`  
-`$ yarn run ngrok` (ngrok doesnt like to run via concurrently, not sure why, I just run it in it's own tab.)
+`$ yarn run ngrok` (ngrok doesnt like to run via concurrently, not sure why, I just run it in it's own tab)
 
 **Tech Stuff**  
-Client is React using Next.js, server is Express, DB is Postgres.  Client and server communicate via GraphQL. I'm mostly using MUI components.  
+Client is React using Next.js, server is Express, DB is Postgres. Client and server communicate via GraphQL. I'm mostly using MUI components.  
 In prod client is deployed with Vercel, server is deployed as a docker image via ~~Heroku~~ Railway.app and DB is hosted via ~~Heroku Postgres~~ Railway.app.
